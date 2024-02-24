@@ -1,11 +1,10 @@
-import "../styles/main.css";
+import "/Users/lianli/Desktop/cs32/Projects/mock-asun59-ffnaqvi/mock/src/styles/main.css";
 import { Dispatch, SetStateAction, useState } from "react";
 import { ControlledInput } from "../ControlledInput";
 import { REPLHistory } from "./REPLHistory";
 import React from "react";
 
 interface REPLInputProps {
-  // TODO: Fill this with desired props... Maybe something to keep track of the submitted commands
   history: string[];
   setHistory: Dispatch<SetStateAction<string[]>>; //would cutomize the type
 }
@@ -14,21 +13,18 @@ interface REPLInputProps {
 export function REPLInput(props: REPLInputProps) {
   // Remember: let React manage state in your webapp.
   // Manages the contents of the input box
-  const [count, setCount] = useState<number>(0);
   const [commandString, setCommandString] = useState<string>("");
+  const [mode, setMode] = useState<string>("brief"); //true means brief
 
-  // TODO WITH TA: build a handleSubmit function called in button onClick
-  // TODO: Once it increments, try to make it push commands... Note that you can use the `...` spread syntax to copy what was there before
-  // add to it with new commands.
-  /**
-   * We suggest breaking down this component into smaller components, think about the individual pieces
-   * of the REPL and how they connect to each other...
-   */
-  function handleClick(commandString: string) {
-    setCount(count + 1);
+  function handleCommand(commandString: string) {
+    if (commandString === "mode") {
+      setMode(mode === "brief" ? "verbose" : "brief");
+    }
+
     props.setHistory([...props.history, commandString]);
     setCommandString("");
   }
+
   return (
     <div className="repl-input">
       {/* This is a comment within the JSX. Notice that it's a TypeScript comment wrapped in
@@ -45,7 +41,8 @@ export function REPLInput(props: REPLInputProps) {
       </fieldset>
       {/* TODO WITH TA: Build a handleSubmit function that increments count and displays the text in the button */}
       {/* TODO: Currently this button just counts up, can we make it push the contents of the input box to the history?*/}
-      <button onClick={() => handleClick(commandString)}>Submit {count}</button>
+      <button onClick={() => handleCommand(commandString)}>Submit </button>
+      <text>Current mode is: {mode}</text>
     </div>
   );
 }

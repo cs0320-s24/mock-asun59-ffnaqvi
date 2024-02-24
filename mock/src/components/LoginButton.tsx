@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Dispatch, SetStateAction } from "react";
 import { usernamePassword } from "./data/mockData";
-
 interface loginProps {
   isLoggedIn: boolean;
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
@@ -13,7 +12,6 @@ export function LoginButton(props: loginProps) {
   const [error, setError] = useState("");
 
   const authenticate = () => {
-
     if (usernamePassword.has(username)) {
       // If the username exists, check if the password matches
       if (usernamePassword.get(username) === password) {
