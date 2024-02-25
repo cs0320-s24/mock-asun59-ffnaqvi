@@ -9,24 +9,26 @@ import React from "react";
 interface REPLInputProps {
   history: string[];
   setHistory: Dispatch<SetStateAction<string[]>>; //would cutomize the type
+  mode: string;
+  setMode: Dispatch<SetStateAction<string>>;
 }
+
 export function REPLInput(props: REPLInputProps) {
 
   const [commandString, setCommandString] = useState<string>("");
-  const [mode, setMode] = useState<string>("brief"); //true means brief
 
   function handleClick(commandString: string) {
     let output: string;
-    if (commandString === "mode") { // Should mode be in a handler or here?
-      setMode(mode === "brief" ? "verbose" : "brief");
-      output = "Mode switched";
-    } else {
+    // if (commandString === "mode") { // Should mode be in a handler or here?
+    //   props.setMode(props.mode === "brief" ? "verbose" : "brief");
+    //   output = "Mode switched";
+    // } else {
       const commandArray: string[] = commandString.split(" ");
       output = InputHandler.handleCommand(commandArray).toString(); // might need to change this
-      if (mode==="verbose"){
+      if (props.mode==="verbose"){
         output = "Command: "+ commandArray[0] + "\n Output: " + output;
       }
-    }
+    // }
 
     props.setHistory([...props.history, output]);
     setCommandString("");
@@ -43,7 +45,7 @@ export function REPLInput(props: REPLInputProps) {
         />
       </fieldset>
       <button onClick={() => handleClick(commandString)}>Submit </button>
-      <text>Current mode is: {mode}</text>
+      <text>Current mode is: {props.mode}</text>
     </div>
   );
 }
