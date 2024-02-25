@@ -1,14 +1,14 @@
 import "../../styles/main.css";
 import { Dispatch, SetStateAction, useState } from "react";
 import { ControlledInput } from "../ControlledInput";
-import { InputHandler } from "./handCommands";
+import { InputHandler } from "./callCommand";
 
 import { REPLHistory } from "./REPLHistory";
 import React from "react";
 
 interface REPLInputProps {
   history: string[];
-  setHistory: Dispatch<SetStateAction<String[]>>; //would cutomize the type
+  setHistory: Dispatch<SetStateAction<string[]>>; //would cutomize the type
 }
 // You can use a custom interface or explicit fields or both! An alternative to the current function header might be:
 // REPLInput(history: string[], setHistory: Dispatch<SetStateAction<string[]>>)
@@ -22,10 +22,13 @@ export function REPLInput(props: REPLInputProps) {
     let output: string;
     if (commandString === "mode") { // Should mode be in a handler or here?
       setMode(mode === "brief" ? "verbose" : "brief");
-      output = `Now in ${mode} mode`;
+      output = "Mode switched";
     } else {
       const commandArray: string[] = commandString.split(" ");
       output = InputHandler.handleCommand(commandArray).toString(); // might need to change this
+      if (mode==="verbose"){
+        output = "Command: "+ commandArray[0] + "\n Output: " + output;
+      }
     }
 
     props.setHistory([...props.history, output]);
