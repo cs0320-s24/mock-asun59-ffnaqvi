@@ -19,16 +19,17 @@ export function REPLInput(props: REPLInputProps) {
 
   function handleClick(commandString: string) {
     let output: string;
-    // if (commandString === "mode") { // Should mode be in a handler or here?
-    //   props.setMode(props.mode === "brief" ? "verbose" : "brief");
-    //   output = "Mode switched";
-    // } else {
+    if (commandString === "mode") { // Should mode be in a handler or here?
+      props.setMode(props.mode === "brief" ? "verbose" : "brief");
+      output = "Mode switched";
+    } 
+    else {
       const commandArray: string[] = commandString.split(" ");
       output = InputHandler.handleCommand(commandArray).toString(); // might need to change this
       if (props.mode==="verbose"){
         output = "Command: "+ commandArray[0] + "\n Output: " + output;
       }
-    // }
+    }
 
     props.setHistory([...props.history, output]);
     setCommandString("");
