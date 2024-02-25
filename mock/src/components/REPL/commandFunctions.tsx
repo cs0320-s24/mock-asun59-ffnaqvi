@@ -25,6 +25,8 @@ let modesProps: string;
 let setModesProps: Dispatch<SetStateAction<string>>;
 let historyProps: string[];
 let setHistoryProps: Dispatch<SetStateAction<string[]>>;
+let csvData: string[][] | undefined;
+let load_status = -1;
 
 export function CommandFunctions(props: REPLInputProps) {
   // Assign props values to constants
@@ -51,30 +53,33 @@ export const load: REPLFunction = (loadFile: Array<string>): String => {
   const fileName = loadFile[1];
 
   if (fileDictionary.has(fileName)) {
+    load_status = 200;
+    csvData = fileDictionary.get(fileName)
     return "File successfully loaded";
   } else {
     return "Failed to load file";
   }
 };
-export const view: REPLFunction = (viewFile: Array<string>): String => {
-  // const history = getHistory();
-  // // Iterate through history in reverse order
-  // for (let i = history.length - 1; i >= 0; i--) {
-  //   // Process each history item as needed
-  //   const historyItem = history[i];
-  //   // Assuming each history item is an array of strings
-  //   recentCalls.push(historyItem);
-  // }
 
-  //   return (
-  //     <div className="repl-history">
-  //         {/* This is where command history will go */            }
-  //         {/* TODO: To go through all the pushed commands... try the .map() function! */}
-  //         {
-  //             props.history.map(
-  //                 (command, index) => <p>{command}</p>
-  //             )}
-  //     </div>
+export const view: REPLFunction = (viewFile: Array<string>): string[][] => {
+  if (!csvData || csvData.length === 0) {
+    return []; // Return empty array if CSV data is empty or undefined
+  }
+
+  // Generate table rows and cells
+  const tableRows = csvData.map((row, rowIndex) => (
+    <tr key={rowIndex}>
+      {row.map((cell, cellIndex) => (
+        <td key={cellIndex}>{cell}</td>
+      ))}
+    </tr>
+  ));
+
+  // Return the HTML table
+  // return (
+  //   <table>
+  //     <tbody>{tableRows}</tbody>
+  //   </table>
   // );
-  return "hello";
+  return (csvData);
 };
