@@ -1,9 +1,10 @@
 import React from "react";
 import { fileDictionary } from "../data/mockData";
-import { REPLFunction, load} from "./commandFunctions";
+import { REPLFunction, load, view} from "./commandFunctions";
 
 const commandDictionary: { [key: string]: REPLFunction } = {
   "load_csv": load,
+  "view": view
 };
 
 export class InputHandler {

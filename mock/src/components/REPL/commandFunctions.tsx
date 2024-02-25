@@ -4,6 +4,7 @@ import { REPLHistory } from "./REPLHistory";
 import { REPLInput } from "./REPLInput";
 import React from "react";
 import { fileDictionary } from "../data/mockData";
+import getHistory from "/Users/lianli/Desktop/cs32/Projects/mock-asun59-ffnaqvi/mock/src/components/REPL/REPL.tsx";
 // Strategy pattern interface
 export interface REPLFunction {
   (command: Array<string>): String | String[][];
@@ -23,3 +24,14 @@ export const load: REPLFunction = (loadFile: Array<string>): String => {
     return "Failed to load file";
   }
 };
+
+export const view: REPLFunction = (viewFile: Array<string>): String[][] => {
+  const history = getHistory();
+  // Iterate through history in reverse order
+  for (let i = history.length - 1; i >= 0; i--) {
+    // Process each history item as needed
+    const historyItem = history[i];
+    // Assuming each history item is an array of strings
+    recentCalls.push(historyItem);
+  }
+}
