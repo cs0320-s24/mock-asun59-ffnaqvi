@@ -1,5 +1,5 @@
 import React from "react";
-import "/Users/lianli/Desktop/cs32/Projects/mock-asun59-ffnaqvi/mock/src/styles/main.css";
+import "../../styles/main.css";
 
 interface REPLHistoryProps {
   // TODO: Fill with some shared state tracking all the pushed commands

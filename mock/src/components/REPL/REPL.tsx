@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "/Users/lianli/Desktop/cs32/Projects/mock-asun59-ffnaqvi/mock/src/styles/main.css"; //TODO: CHSNGR
+import "../../styles/main.css";
 import { REPLHistory } from "./REPLHistory";
 import { REPLInput } from "./REPLInput";
 import React from "react";

@@ -1,6 +1,8 @@
-import "/Users/lianli/Desktop/cs32/Projects/mock-asun59-ffnaqvi/mock/src/styles/main.css";
+import "../../styles/main.css";
 import { Dispatch, SetStateAction, useState } from "react";
 import { ControlledInput } from "../ControlledInput";
+import { InputHandler } from "../csv/loadAndViewCSV";
+
 import { REPLHistory } from "./REPLHistory";
 import React from "react";
 
@@ -16,9 +18,12 @@ export function REPLInput(props: REPLInputProps) {
   const [commandString, setCommandString] = useState<string>("");
   const [mode, setMode] = useState<string>("brief"); //true means brief
 
-  function handleCommand(commandString: string) {
+  function handleClick(commandString: string) {
     if (commandString === "mode") {
       setMode(mode === "brief" ? "verbose" : "brief");
+    }
+    else {
+      InputHandler.handleCommand(commandString);
     }
 
     props.setHistory([...props.history, commandString]);
@@ -41,7 +46,7 @@ export function REPLInput(props: REPLInputProps) {
       </fieldset>
       {/* TODO WITH TA: Build a handleSubmit function that increments count and displays the text in the button */}
       {/* TODO: Currently this button just counts up, can we make it push the contents of the input box to the history?*/}
-      <button onClick={() => handleCommand(commandString)}>Submit </button>
+      <button onClick={() => handleClick(commandString)}>Submit </button>
       <text>Current mode is: {mode}</text>
     </div>
   );
