@@ -1,3 +1,4 @@
+import React from "react";
 import { fileDictionary } from "../data/mockData";
 
 let LOAD_CODE = -1; // Initial load code
@@ -13,16 +14,36 @@ export class InputHandler {
         }
     }
 
-    static viewcsv(): void {
+    static viewcsv() {
         try {
             if (LOAD_CODE === 200) {
                 console.table(csvData); // Print CSV data as a table
+                return (
+                    <div>
+                        <p>{LOAD_CODE === 200 ? "CSV loaded successfully" : "Failed to load CSV"}</p>
+                        {LOAD_CODE === 200 && (
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Column 1</th>
+                                        <th>Column 2</th>
+                                        {/* Add more columns if needed */}
+                                    </tr>
+                                </thead>
+                                
+                            </table>
+                        )}
+                    </div>
+                );
             } else {
                 console.error("Failed to load CSV data.");
+                return (<p>this is a test for failure</p>);
+
             }
         } catch (error) {
             console.error(error.message);
         }
+        
     }
 
     static handleCommand(commandString: string): void {
