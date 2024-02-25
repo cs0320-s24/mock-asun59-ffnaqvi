@@ -4,12 +4,11 @@ import { REPLHistory } from "./REPLHistory";
 import { REPLInput } from "./REPLInput";
 import React from "react";
 import { fileDictionary } from "../data/mockData";
-import getHistory from "/Users/lianli/Desktop/cs32/Projects/mock-asun59-ffnaqvi/mock/src/components/REPL/REPL.tsx";
+import getHistory from "./REPL.tsx";
 // Strategy pattern interface
 export interface REPLFunction {
   (command: Array<string>): String | String[][];
 }
-
 
 // Example implementation of the interface
 export const load: REPLFunction = (loadFile: Array<string>): String => {
