@@ -9,10 +9,6 @@ export default function REPL() {
   const [history, setHistory] = useState<string[]>([]);
   const [mode, setMode] = useState<string>("brief");
 
-  const getHistory = (): string[] => {
-    return history;
-  };
-
   return (
     <div className="repl">
       <REPLHistory history={history} />
