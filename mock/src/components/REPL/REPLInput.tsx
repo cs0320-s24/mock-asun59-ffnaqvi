@@ -2,8 +2,6 @@ import "../../styles/main.css";
 import { Dispatch, SetStateAction, useState } from "react";
 import { ControlledInput } from "../ControlledInput";
 import { InputHandler } from "./callCommand";
-
-import { REPLHistory } from "./REPLHistory";
 import React from "react";
 
 interface REPLInputProps {
@@ -12,7 +10,7 @@ interface REPLInputProps {
   mode: string;
   setMode: Dispatch<SetStateAction<string>>;
 }
-
+export let command: string = "";
 export function REPLInput(props: REPLInputProps) {
 
   const [commandString, setCommandString] = useState<string>("")
@@ -21,6 +19,7 @@ export function REPLInput(props: REPLInputProps) {
     let output;
 
     const commandArray: string[] = commandString.split(" ");
+    command = commandArray[0];
     output = InputHandler.handleCommand(commandArray); 
     props.setHistory([...props.history, output]);
    

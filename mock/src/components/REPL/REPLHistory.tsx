@@ -4,6 +4,7 @@ import "../../styles/main.css";
 interface REPLHistoryProps {
   history: (string | string[])[];
   mode: string;
+  command : string;
 }
 
 export function REPLHistory(props: REPLHistoryProps) {
@@ -16,7 +17,7 @@ export function REPLHistory(props: REPLHistoryProps) {
           } else {
             return (
               <div key={index}>
-                <pre>Command: {/*command*/}</pre>
+                <pre>Command: {props.command}</pre>
                 <pre key={index}>Output: {historyItem}</pre>
               </div>
             );
@@ -49,7 +50,7 @@ export function REPLHistory(props: REPLHistoryProps) {
           } else {
             return (
               <div key={index}>
-                <pre>Command: {/*command*/}</pre>
+                <pre>Command: {props.command}</pre>
                 <pre>Output:</pre>
                 <table>
                   <tbody>

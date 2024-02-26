@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import "../../styles/main.css";
 import { REPLHistory } from "./REPLHistory";
-import { REPLInput } from "./REPLInput";
+import { REPLInput, command } from "./REPLInput";
 import React from "react";
 import { CommandFunctions } from "./commandFunctions";
 
@@ -13,7 +13,8 @@ export default function REPL() {
     <div className="repl">
       <REPLHistory 
         history={history} 
-        mode = {mode}/>
+        mode = {mode}
+        command = {command}/>
       <hr></hr>
       <REPLInput
         history={history}
