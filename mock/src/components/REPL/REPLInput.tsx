@@ -15,7 +15,7 @@ interface REPLInputProps {
 
 export function REPLInput(props: REPLInputProps) {
 
-  const [commandString, setCommandString] = useState<string>("");
+  const [commandString, setCommandString] = useState<string>("")
 
   function handleClick(commandString: string) {
     let output;
@@ -42,3 +42,4 @@ export function REPLInput(props: REPLInputProps) {
     </div>
   );
 }
+
