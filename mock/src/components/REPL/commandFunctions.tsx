@@ -122,11 +122,11 @@ export const search: REPLFunction = (searchCommands: Array<string>): string[][] 
    
   // }
   //randomly push the second row to search
-  if (csvData.length >= 2) {
-          result.push(csvData[1]);
+  if (csvData.length >= 0) {
+          result.push(csvData[0]);
   }
   
-      return result;
+  return result;
     
    
 };
