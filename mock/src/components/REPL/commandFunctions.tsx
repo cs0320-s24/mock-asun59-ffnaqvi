@@ -64,6 +64,9 @@ export const load: REPLFunction = (loadFile: Array<string>): string => {
 };
 
 export const view: REPLFunction = (viewFile: Array<string>): string[][] | string => {
+  if (viewFile.length!=1){
+    return "Invalid Input"
+  }
   if (load_status == 200) {
     if (!csvData || csvData.length === 0) {
         return [];  
@@ -91,7 +94,7 @@ export const search: REPLFunction = (searchCommands: Array<string>): string[][] 
       return "Invalid input, please enter the column identifier and search value separated by a space";
    
   }
-
+  
   //searching for when columnIdentifier is a number
   // colInd = parseInt(columnIdentifier);
   // if (Number.isNaN(colInd)) {
