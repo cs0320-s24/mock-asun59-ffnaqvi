@@ -11,7 +11,9 @@ export default function REPL() {
 
   return (
     <div className="repl">
-      <REPLHistory history={history} />
+      <REPLHistory 
+        history={history} 
+        mode = {mode}/>
       <hr></hr>
       <REPLInput
         history={history}
