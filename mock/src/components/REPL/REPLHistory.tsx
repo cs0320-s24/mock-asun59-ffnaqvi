@@ -26,11 +26,9 @@ export function REPLHistory(props: REPLHistoryProps) {
     <div className="repl-history">
       {props.history.map((historyItem, index) => {
         if (typeof historyItem === "string") {
-          console.log(typeof historyItem);
-          console.log("in repl history if case")
+
           return <pre key={index}>{historyItem}</pre>; 
         } else {
-          console.log("in repl history else case");
           return (
             <div key={index}>
               <table>

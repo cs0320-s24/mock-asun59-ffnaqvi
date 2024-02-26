@@ -18,9 +18,7 @@ const commandDictionary: { [key: string]: REPLFunction } = {
 export class InputHandler {
   static handleCommand(command: Array<string>): String | String[][] {
     const func = commandDictionary[command[0]];
-    console.log("command name is" + command[0])
-    console.log("command is" + command)
-
+  
     if (func){
         return func(command);
     } 

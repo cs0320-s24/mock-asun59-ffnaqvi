@@ -26,7 +26,6 @@ export function REPLInput(props: REPLInputProps) {
     else {
       const commandArray: string[] = commandString.split(" ");
       output = InputHandler.handleCommand(commandArray); 
-      console.log("output is: " + output);
       if (props.mode==="verbose"){
          output = "Command: "+ commandArray[0] + "\n Output: " + output;
       }

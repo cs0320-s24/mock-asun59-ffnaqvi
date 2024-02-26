@@ -66,8 +66,6 @@ export const view: REPLFunction = (viewFile: Array<string>): string[][] | string
       return []; // Return empty array if CSV data is empty or undefined
    }
  
-   console.log("csv data type:" +  typeof csvData);
-   console.log("csv[0] data type:" + typeof csvData[0]);
    return (csvData);
   }
   else {
@@ -89,31 +87,30 @@ export const search: REPLFunction = (searchCommands: Array<string>): string[][] 
   }
 
   //searching for when columnIdentifier is a number
-  try {
-    colInd = parseInt(columnIdentifier);
-  } catch (error) {
+  colInd = parseInt(columnIdentifier);
+  if (Number.isNaN(colInd)) {
     for (let i = 0; i < csvData[0].length; i++) {
       if (csvData[0][i] === columnIdentifier) {
         colInd = i;
       }
     }
   }
-  // if (typeof columnIdentifier === 'number') {
-    if (colInd != -1) {
+  if (colInd != -1) {
     for (let i = 0; i < csvData.length; i ++) {
       if (csvData[i][colInd] === searchValue) {
         result.push(csvData[i]);
       }
     }
-    if (result.length == 0) {
-      return ("Could not find any rows matching your criteria");
-    }
-    else {
-      return result;
-    }
+    
   }
   else {
     return ("Your column identifier is not valid");
+  }
+  if (result.length == 0) {
+    return ("Could not find any rows matching your criteria");
+  }
+  else {
+    return result;
   }
    
 };
