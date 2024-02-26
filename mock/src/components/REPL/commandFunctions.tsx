@@ -1,10 +1,8 @@
 import { Dispatch, ReactElement, SetStateAction, useState } from "react";
 import "../../styles/main.css";
-import { REPLHistory } from "./REPLHistory";
-import { REPLInput } from "./REPLInput";
 import React from "react";
-import { fileDictionary } from "../data/mockData";
-import getHistory from "./REPL.tsx";
+import { fileDictionary, searchDictionary } from "../data/mockData";
+
 
 // Strategy pattern interface
 export interface REPLFunction {
@@ -58,6 +56,10 @@ export const load: REPLFunction = (loadFile: Array<string>): string => {
       return "File successfully loaded";
   } 
   else {
+      // Return backend specific error response
+      if(loadedData){
+        return loadedData[0][0];
+      }
       return "Failed to load file";  
   }
 };
@@ -79,49 +81,22 @@ export const view: REPLFunction = (viewFile: Array<string>): string[][] | string
 
 
 export const search: REPLFunction = (searchCommands: Array<string>): string[][] | string=> {
-
-  const columnIdentifier = searchCommands[1];
-  const searchValue = searchCommands[2];
-  const result: string[][] = []; 
-  let colInd = -1;
-
+  
   if (searchCommands.length !== 3) {
       return "Invalid input, please enter the column identifier and search value separated by a space";
-   
   }
-  
-  //searching for when columnIdentifier is a number
-  // colInd = parseInt(columnIdentifier);
-  // if (Number.isNaN(colInd)) {
-  //   for (let i = 0; i < csvData[0].length; i++) {
-  //     if (csvData[0][i] === columnIdentifier) {
-  //       colInd = i;
-  //     }
-  //   }
-  // }
-  // if (colInd != -1) {
-  //   for (let i = 0; i < csvData.length; i ++) {
-  //     if (csvData[i][colInd] === searchValue) {
-  //       result.push(csvData[i]);
-  //     }
-  //   }
-  // }
-  // else {
-   
-  //     return "Your column identifier is not valid.";
-   
-  // }
-  // if (result.length == 0) {
-    
-  //     return "Could not find any rows matching your search criteria.";
-   
-  // }
-  //randomly push the second row to search
-  if (csvData.length >= 0) {
-          result.push(csvData[0]);
+  const commandString = searchCommands[0]+searchCommands[1]+searchCommands[2];
+  const output = searchDictionary.get(commandString);
+  console.log(output);
+  console.log(searchCommands);
+  if (load_status ==200 && output && output[0][0] != "Invalid Index Number") {
+    return output;
   }
-  
-  return result;
-    
+  else{
+    if(output){
+      return output[0][0];
+    }
+    return "File failed to search";
+  }
    
 };

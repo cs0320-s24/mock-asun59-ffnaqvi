@@ -1,5 +1,6 @@
 export const usernamePassword = new Map<string, string>();
 export const fileDictionary = new Map<string, string[][]>();
+export const searchDictionary = new Map<string, string[][]>();
 // Add username-password pairs to the map
 usernamePassword.set("Alyssa", "A");
 usernamePassword.set("Faizah", "F");
@@ -32,3 +33,23 @@ fileDictionary.set("noHeader", dataNoHeader);
 fileDictionary.set("emptyData", emptyData);
 fileDictionary.set("invalidFilePath", invalidFilePath);
 fileDictionary.set("malformedData", malformedData);
+
+const useIndex = [["Miley", "Cyrus", "California", "123", "apple"]];
+
+const useHeader = [["Miley", "Cyrus", "California", "123", "apple"]];
+
+const invalidIndex = [["Invalid Index Number"]];
+
+const noHeader = [[]];
+
+const multOUtput = [
+  ["Miley", "Cyrus", "California", "123", "apple"],
+  ["Tim", "Nelson", "Pennsylvania", "456", "apple"],
+];
+
+searchDictionary.set("search1Miley", useIndex);
+searchDictionary.set("searchfirst nameMiley", useHeader);
+searchDictionary.set("search20Miley", invalidIndex);
+searchDictionary.set("searchnoHeaderMiley", noHeader);
+searchDictionary.set("searchFavoriteFruitapple", multOUtput);
+
