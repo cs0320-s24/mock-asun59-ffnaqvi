@@ -71,7 +71,6 @@ export const view: REPLFunction = (viewFile: Array<string>): string[][] | string
         return [];  
    }
     return (csvData);
-    
   }
   else {
     
@@ -89,7 +88,6 @@ export const search: REPLFunction = (searchCommands: Array<string>): string[][] 
   let colInd = -1;
 
   if (searchCommands.length !== 3) {
-   
       return "Invalid input, please enter the column identifier and search value separated by a space";
    
   }
