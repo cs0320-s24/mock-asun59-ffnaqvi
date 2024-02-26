@@ -93,35 +93,37 @@ export const search: REPLFunction = (searchCommands: Array<string>): string[][] 
   }
 
   //searching for when columnIdentifier is a number
-  colInd = parseInt(columnIdentifier);
-  if (Number.isNaN(colInd)) {
-    for (let i = 0; i < csvData[0].length; i++) {
-      if (csvData[0][i] === columnIdentifier) {
-        colInd = i;
-      }
-    }
-  }
-  if (colInd != -1) {
-    for (let i = 0; i < csvData.length; i ++) {
-      if (csvData[i][colInd] === searchValue) {
-        result.push(csvData[i]);
-      }
-    }
-  }
-  else {
+  // colInd = parseInt(columnIdentifier);
+  // if (Number.isNaN(colInd)) {
+  //   for (let i = 0; i < csvData[0].length; i++) {
+  //     if (csvData[0][i] === columnIdentifier) {
+  //       colInd = i;
+  //     }
+  //   }
+  // }
+  // if (colInd != -1) {
+  //   for (let i = 0; i < csvData.length; i ++) {
+  //     if (csvData[i][colInd] === searchValue) {
+  //       result.push(csvData[i]);
+  //     }
+  //   }
+  // }
+  // else {
    
-      return "Your column identifier is not valid.";
+  //     return "Your column identifier is not valid.";
    
-  }
-  if (result.length == 0) {
+  // }
+  // if (result.length == 0) {
     
-      return "Could not find any rows matching your search criteria.";
+  //     return "Could not find any rows matching your search criteria.";
    
+  // }
+  //randomly push the second row to search
+  if (csvData.length >= 2) {
+          result.push(csvData[1]);
   }
-  else {
-   
+  
       return result;
     
-  }
    
 };
