@@ -15,7 +15,7 @@ export function REPLHistory(props: REPLHistoryProps) {
             return <pre key={index}>{historyItem}</pre>;
           } else {
             return (
-              <div>
+              <div key={index}>
                 <pre>Command: {/*command*/}</pre>
                 <pre key={index}>Output: {historyItem}</pre>
               </div>
@@ -27,17 +27,21 @@ export function REPLHistory(props: REPLHistoryProps) {
               <div key={index}>
                 <table>
                   <tbody>
-                    {historyItem.map((row, rowIndex) => (
-                      <tr key={rowIndex}>
-                        {Array.isArray(row) ? (
-                          row.map((item, itemIndex) => (
-                            <td key={itemIndex}>{item}</td>
-                          ))
-                        ) : (
-                          <td key={rowIndex}>{row}</td>
-                        )}
-                      </tr>
-                    ))}
+                    {historyItem[0].length === 0 ? (
+                      <tr><td>&nbsp;</td></tr>
+                    ) : (
+                      historyItem.map((row, rowIndex) => (
+                        <tr key={rowIndex}>
+                          {Array.isArray(row) ? (
+                            row.map((item, itemIndex) => (
+                              <td key={itemIndex}>{item}</td>
+                            ))
+                          ) : (
+                            <td key={rowIndex}>{row}</td>
+                          )}
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -49,17 +53,21 @@ export function REPLHistory(props: REPLHistoryProps) {
                 <pre>Output:</pre>
                 <table>
                   <tbody>
-                    {historyItem.map((row, rowIndex) => (
-                      <tr key={rowIndex}>
-                        {Array.isArray(row) ? (
-                          row.map((item, itemIndex) => (
-                            <td key={itemIndex}>{item}</td>
-                          ))
-                        ) : (
-                          <td key={rowIndex}>{row}</td>
-                        )}
-                      </tr>
-                    ))}
+                    {historyItem[0].length === 0 ? (
+                      <tr><td>&nbsp;</td></tr>
+                    ) : (
+                      historyItem.map((row, rowIndex) => (
+                        <tr key={rowIndex}>
+                          {Array.isArray(row) ? (
+                            row.map((item, itemIndex) => (
+                              <td key={itemIndex}>{item}</td>
+                            ))
+                          ) : (
+                            <td key={rowIndex}>{row}</td>
+                          )}
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -70,3 +78,4 @@ export function REPLHistory(props: REPLHistoryProps) {
     </div>
   );
 }
+

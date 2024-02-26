@@ -67,9 +67,7 @@ export const view: REPLFunction = (viewFile: Array<string>): string[][] | string
     return "Invalid Input"
   }
   if (load_status == 200) {
-    if (!csvData || csvData.length === 0) {
-        return [];  
-   }
+  
     return (csvData);
   }
   else {
