@@ -52,13 +52,12 @@ export const load: REPLFunction = (loadFile: Array<string>): string => {
   const fileName = loadFile[1];
 
   const loadedData = fileDictionary.get(fileName);
-  if (loadedData) {
+  if (loadedData && loadedData[0][0]!="invalid File path" && loadedData[0][0]!="Data is malformed") {
     load_status = 200;
     csvData = loadedData;
       return "File successfully loaded";
   } 
   else {
- 
       return "Failed to load file";  
   }
 };
