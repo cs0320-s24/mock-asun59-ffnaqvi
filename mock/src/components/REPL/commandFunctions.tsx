@@ -82,40 +82,38 @@ export const search: REPLFunction = (searchCommands: Array<string>): string[][] 
   const columnIdentifier = searchCommands[1];
   const searchValue = searchCommands[2];
   const result: string[][] = []; 
+  let colInd = -1;
 
   if (searchCommands.length !== 3) {
     return "Invalid Input";
   }
 
   //searching for when columnIdentifier is a number
-  if (typeof columnIdentifier === 'number') {
-    for (const row of csvData) {
-      if (row[columnIdentifier] === searchValue) {
-        result.push(row);
-      }
-    }
-  } 
-  //searching for when column identifier is a string
-  else {
-    //checks to see if column identifier matches header
-    let colInd = -1;
+  try {
+    colInd = parseInt(columnIdentifier);
+  } catch (error) {
     for (let i = 0; i < csvData[0].length; i++) {
       if (csvData[0][i] === columnIdentifier) {
         colInd = i;
       }
-    
-    if (colInd != -1) {
-      for (let j = 1; j < csvData.length; j++) {
-            // Check if the value in the column identified by the index matches the searchValue
-          if (csvData[j][colInd] === searchValue) {
-              result.push(csvData[j]);
-            }
-          }
-      }
-      else {
-        return ("Could not find any rows matching your criteria");
-      }
     }
   }
-  return result;
+  // if (typeof columnIdentifier === 'number') {
+    if (colInd != -1) {
+    for (let i = 0; i < csvData.length; i ++) {
+      if (csvData[i][colInd] === searchValue) {
+        result.push(csvData[i]);
+      }
+    }
+    if (result.length == 0) {
+      return ("Could not find any rows matching your criteria");
+    }
+    else {
+      return result;
+    }
+  }
+  else {
+    return ("Your column identifier is not valid");
+  }
+   
 };
