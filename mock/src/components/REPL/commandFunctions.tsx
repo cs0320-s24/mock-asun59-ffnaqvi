@@ -61,6 +61,9 @@ export const load: REPLFunction = (loadFile: Array<string>): string => {
 };
 
 export const view: REPLFunction = (viewFile: Array<string>): string[][] | string => {
+  if (viewFile.length!=1){
+    return "Invalid Input"
+  }
   if (load_status == 200) {
     if (!csvData || csvData.length === 0) {
       return []; // Return empty array if CSV data is empty or undefined
@@ -86,7 +89,7 @@ export const search: REPLFunction = (searchCommands: Array<string>): string[][] 
     return "Invalid Input";
   }
 
-  //searching for when columnIdentifier is a number
+  //searching for when columnIdentifier is a number TODO:  might need to fix
   colInd = parseInt(columnIdentifier);
   if (Number.isNaN(colInd)) {
     for (let i = 0; i < csvData[0].length; i++) {
