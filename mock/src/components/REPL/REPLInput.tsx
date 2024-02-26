@@ -8,7 +8,7 @@ import React from "react";
 
 interface REPLInputProps {
   history: string[];
-  setHistory: Dispatch<SetStateAction<string[]>>; //would cutomize the type
+  setHistory: Dispatch<SetStateAction<string[]>>; 
   mode: string;
   setMode: Dispatch<SetStateAction<string>>;
 }
@@ -19,19 +19,11 @@ export function REPLInput(props: REPLInputProps) {
 
   function handleClick(commandString: string) {
     let output;
-    if (commandString === "mode") { // Should mode be in a handler or here?
-      props.setMode(props.mode === "brief" ? "verbose" : "brief");
-      output = "Mode switched";
-    } 
-    else {
-      const commandArray: string[] = commandString.split(" ");
-      output = InputHandler.handleCommand(commandArray); 
-      if (props.mode==="verbose"){
-         output = "Command: "+ commandArray[0] + "\n Output: " + output;
-      }
-    }
 
+    const commandArray: string[] = commandString.split(" ");
+    output = InputHandler.handleCommand(commandArray); 
     props.setHistory([...props.history, output]);
+   
     setCommandString("");
   }
 

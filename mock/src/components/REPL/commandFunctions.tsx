@@ -33,7 +33,7 @@ export function CommandFunctions(props: REPLInputProps) {
   historyProps = props.history;
   setHistoryProps = props.setHistory;
 
-  return <div>{/* JSX content here */}</div>;
+  return <div></div>;
 }
 
 export const mode: REPLFunction = (modeArray: Array<string>): String => {
@@ -46,7 +46,8 @@ export const mode: REPLFunction = (modeArray: Array<string>): String => {
 
 export const load: REPLFunction = (loadFile: Array<string>): string => {
   if (loadFile.length !== 2) {
-    return "Invalid Input";
+      return "Invalid input, please enter the name of a csv file to load.";
+ 
   }
   const fileName = loadFile[1];
 
@@ -54,9 +55,11 @@ export const load: REPLFunction = (loadFile: Array<string>): string => {
   if (loadedData) {
     load_status = 200;
     csvData = loadedData;
-    return "File successfully loaded";
-  } else {
-    return "Failed to load file";
+      return "File successfully loaded";
+  } 
+  else {
+ 
+      return "Failed to load file";  
   }
 };
 
@@ -66,13 +69,14 @@ export const view: REPLFunction = (viewFile: Array<string>): string[][] | string
   }
   if (load_status == 200) {
     if (!csvData || csvData.length === 0) {
-      return []; // Return empty array if CSV data is empty or undefined
+        return [];  
    }
- 
-   return (csvData);
+    return (csvData);
+    
   }
   else {
-    return "CSV file hasn't been loaded";
+    
+      return "CSV file hasn't been loaded";
   }
   
 };
@@ -86,34 +90,43 @@ export const search: REPLFunction = (searchCommands: Array<string>): string[][] 
   let colInd = -1;
 
   if (searchCommands.length !== 3) {
-    return "Invalid Input";
+   
+      return "Invalid input, please enter the column identifier and search value separated by a space";
+   
   }
-
-  //searching for when columnIdentifier is a number TODO:  might need to fix
-  colInd = parseInt(columnIdentifier);
-  if (Number.isNaN(colInd)) {
-    for (let i = 0; i < csvData[0].length; i++) {
-      if (csvData[0][i] === columnIdentifier) {
-        colInd = i;
-      }
-    }
-  }
-  if (colInd != -1) {
-    for (let i = 0; i < csvData.length; i ++) {
-      if (csvData[i][colInd] === searchValue) {
-        result.push(csvData[i]);
-      }
-    }
+  
+  //searching for when columnIdentifier is a number
+  // colInd = parseInt(columnIdentifier);
+  // if (Number.isNaN(colInd)) {
+  //   for (let i = 0; i < csvData[0].length; i++) {
+  //     if (csvData[0][i] === columnIdentifier) {
+  //       colInd = i;
+  //     }
+  //   }
+  // }
+  // if (colInd != -1) {
+  //   for (let i = 0; i < csvData.length; i ++) {
+  //     if (csvData[i][colInd] === searchValue) {
+  //       result.push(csvData[i]);
+  //     }
+  //   }
+  // }
+  // else {
+   
+  //     return "Your column identifier is not valid.";
+   
+  // }
+  // if (result.length == 0) {
     
+  //     return "Could not find any rows matching your search criteria.";
+   
+  // }
+  //randomly push the second row to search
+  if (csvData.length >= 2) {
+          result.push(csvData[1]);
   }
-  else {
-    return ("Your column identifier is not valid");
-  }
-  if (result.length == 0) {
-    return ("Could not find any rows matching your criteria");
-  }
-  else {
-    return result;
-  }
+  
+      return result;
+    
    
 };

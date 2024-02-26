@@ -16,7 +16,9 @@ const commandDictionary: { [key: string]: REPLFunction } = {
 };
 
 export class InputHandler {
+  
   static handleCommand(command: Array<string>): String | String[][] {
+    
     const func = commandDictionary[command[0]];
   
     if (func){
@@ -25,3 +27,4 @@ export class InputHandler {
     return ("Invalid command")
   }
 }
+
