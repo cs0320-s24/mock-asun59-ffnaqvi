@@ -1,4 +1,4 @@
-import { Dispatch, ReactElement, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import "../../styles/main.css";
 import React from "react";
 import { fileDictionary, searchDictionary } from "../data/mockData";
@@ -30,10 +30,6 @@ export function CommandFunctions(props: REPLInputProps) {
   setModesProps = props.setMode;
   historyProps = props.history;
   setHistoryProps = props.setHistory;
-
-  // useEffect(() => {
-  //   props.setMode(props.mode === "brief" ? "verbose" : "brief");
-  // }, [modesProps]);
 
   return <div></div>;
 }

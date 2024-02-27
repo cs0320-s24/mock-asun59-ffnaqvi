@@ -23,18 +23,15 @@ export function REPLInput(props: REPLInputProps) {
     const commandArray: string[] = commandString.split(" ");
     commandStr = commandArray[0];
     output = InputHandler.handleCommand(commandArray);
-    console.log("REPLInput the mode of the program:" + props.mode); 
+
     if (props.mode === 'verbose') {
-      console.log("REPLInput in verbose mode");
+    
       commandLine = "Command: " + commandStr + "\nOutput: ";
-      console.log("commandLine is " + commandLine);
       props.setHistory([...props.history, commandLine, output]);
-      // props.setHistory([...props.history, output]);
-      console.log("Props history is" + props.history);
     }
     else {
-    props.setHistory([...props.history, output]);
-  }
+      props.setHistory([...props.history, output]);
+    }
    
     setCommandString("");
   }
