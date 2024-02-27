@@ -14,10 +14,11 @@ const commandDictionary: { [key: string]: REPLFunction } = {
   "mode":mode,
   "search": search
 };
-
+export let commandString: string = "";
 export class InputHandler {
-  
+    
   static handleCommand(command: Array<string>): String | String[][] {
+    commandString = command[0];
     
     const func = commandDictionary[command[0]];
   

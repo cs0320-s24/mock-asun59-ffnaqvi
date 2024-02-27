@@ -12,16 +12,16 @@ export function REPLHistory(props: REPLHistoryProps) {
     <div className="repl-history">
       {props.history.map((historyItem, index) => {
         if (typeof historyItem === "string") {
-          if (props.mode === "brief") {
+          // if (props.mode === "brief") {
             return <pre key={index}>{historyItem}</pre>;
-          } else {
-            return (
-              <div key={index}>
-                <pre>Command: {props.command}</pre>
-                <pre key={index}>Output: {historyItem}</pre>
-              </div>
-            );
-          }
+          // } else {
+          //   return (
+          //     <div key={index}>
+          //       {/* <pre>Command: {props.command}</pre> */}
+          //       <pre key={index}>Output: {historyItem}</pre>
+          //     </div>
+          //   );
+          // }
         } else {
           if (props.mode === "brief") {
             return (
@@ -50,8 +50,8 @@ export function REPLHistory(props: REPLHistoryProps) {
           } else {
             return (
               <div key={index}>
-                <pre>Command: {props.command}</pre>
-                <pre>Output:</pre>
+                {/* <pre>Command: {props.command}</pre> */}
+                {/* <pre>Output:</pre> */}
                 <table>
                   <tbody>
                     {historyItem[0].length === 0 ? (
