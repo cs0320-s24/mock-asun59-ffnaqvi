@@ -34,14 +34,14 @@ export function LoginButton(props: loginProps) {
   } else {
     return (
       <div>
-        <input
+        <input aria-label = "username"
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Enter Username"
         />
-        <input
-          type="password"
+        <input aria-label = "password"
+          type="text"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Enter Password"

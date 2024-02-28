@@ -8,10 +8,6 @@ import { expect, test } from "@playwright/test";
   Look for this pattern in the tests below!
  */
 
-// test.beforeEach(() => {
-//     await page.goto('http://localhost:5173/');
-
-// })
 test.beforeEach(async ({ page }) => {
   await page.goto("http://localhost:5173/");
 });
@@ -23,40 +19,46 @@ test.beforeEach(async ({ page }) => {
  * like any interaction with the page.
  */
 
-// // Login functionalities
+//Tests login functionality
 test("on page load, i see a login button", async ({ page }) => {
-  // Notice: http, not https! Our front-end is not set up for HTTPs.
   await expect(page.getByLabel("Login")).toBeVisible();
+  await expect(page.getByLabel("repl-command-box")).not.toBeVisible();
+  await expect(page.getByLabel("Sign Out")).not.toBeVisible();
+
 });
-// Valid login
+
+//Tests valid login
 test('can log in with proper username and password', async ({ page })=>{
 
   await expect(page.getByLabel("Sign Out")).not.toBeVisible();
   await expect(page.getByLabel("Command input")).not.toBeVisible();
 
   // Sign in by passing in correct username + password
-  await page.getByText("username").fill('Alyssa');
-  await page.getByText("password").fill('A');
+  await page.getByLabel("username").fill('Alyssa');
+  await page.getByLabel("password").fill('A');
   await page.getByLabel("Login").click();
+
   // Successful login
   await expect(page.getByLabel("Sign Out")).toBeVisible();
   await expect(page.getByLabel("repl-command-box")).toBeVisible();
 })
 
+// //testing that sign out is not visible until login
 // test('on page load, i dont see the input box until login', async ({ page }) => {
 //   // Notice: http, not https! Our front-end is not set up for HTTPs.
-//   await page.goto('http://localhost:5173/');
 //   await expect(page.getByLabel('Sign Out')).not.toBeVisible()
-//   await expect(page.getByLabel('Command input')).not.toBeVisible()
+//   await expect(page.getByLabel('repl-command-box')).not.toBeVisible()
 
-//   // click the login button
-
+//   // click the login button and login properly
+//   await page.getByLabel("username").fill('Faizah');
+//   await page.getByLabel("password").fill('F');
 //   await page.getByLabel('Login').click();
+
 //   await expect(page.getByLabel('Sign Out')).toBeVisible()
 //   await expect(page.getByLabel('repl-command-box')).toBeVisible()
 // })
-// Invalid login
 
+// // Invalid login
 // test('after I type into the input box, its text changes', async ({ page }) => {
 //   // Step 1: Navigate to a URL
 //   await page.goto('http://localhost:5173/');

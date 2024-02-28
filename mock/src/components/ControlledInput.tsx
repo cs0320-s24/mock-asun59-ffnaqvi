@@ -16,11 +16,12 @@ interface ControlledInputProps {
   //   so we have a special component that wraps the input box.
   export function ControlledInput({value, setValue, ariaLabel}: ControlledInputProps) {
     return (
-      <input type="text" className="repl-command-box"
+      <input aria-label = "repl-command-box" 
+      type="text" className="repl-command-box"
             value={value} 
             placeholder="Enter command here!"
             onChange={(ev) => setValue(ev.target.value)}
-            aria-label={ariaLabel}>
+           >
       </input>
     );
   }
