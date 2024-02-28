@@ -9,7 +9,9 @@ interface REPLHistoryProps {
 
 export function REPLHistory(props: REPLHistoryProps) {
   return (
-    <div className="repl-history">
+    <div 
+    aria-label = "repl-history"
+    className="repl-history">
       {props.history.map((historyItem, index) => {
         if (typeof historyItem === "string") {
           return <pre key={index}>{historyItem}</pre>;
