@@ -10,17 +10,20 @@ usernamePassword.set("Faizah", "F");
  * types of mocked JSON files.
  */
 const dataHeader = [
-  ["First Name", "Last Name", "State", "Phone Number", "Favorite Fruit"],
-  ["Miley", "Cyrus", "California", "123", "apple"],
-  ["Bob", "Nelson", "Rhode Island", "401401401", "pear"],
-  ["Tim", "Nelson", "Pennsylvania", "456", "apple"],
+  ["Food", "Type", "Cuisine", "Calories (per 100g)", "Price ($)"],
+  ["Sushi", "Dish", "Japanese", "130", "10"],
+  ["Tacos", "Dish", "Mexican", "218", "6"],
+  ["Tandoori Chicken", "Dish", "Indian", "220", "8"],
+  ["Mozerella Sticks", "Appetizer", "Italian", "131", "5"],
+  ["Falafel", "Dish", "Middle Eastern", "333", "4"],
 ];
 
 const dataNoHeader = [
-  ["Female", "Professor", "33"],
-  ["Male", "Nurse", "27"],
-  ["Female", "Lawyer", "46"],
+  ["Andrews", "Grinder", "North Campus"],
+  ["Ratty", "Tomato Soup", "South Campus"],
+  ["Blue Room", "Muffin", "Campus Center"]
 ];
+
 
 const emptyData = [[]];
 
@@ -34,22 +37,24 @@ fileDictionary.set("emptyData", emptyData);
 fileDictionary.set("invalidFilePath", invalidFilePath);
 fileDictionary.set("malformedData", malformedData);
 
-const useIndex = [["Miley", "Cyrus", "California", "123", "apple"]];
+const useIndex = [["Tandoori Chicken", "Dish", "Indian", "220", "8"]];
 
-const useHeader = [["Miley", "Cyrus", "California", "123", "apple"]];
+const useHeader = [["Tandoori Chicken", "Dish", "Indian", "220", "8"]];
 
 const invalidIndex = [["Invalid Index Number"]];
 
 const noHeader = [[]];
 
 const multOUtput = [
-  ["Miley", "Cyrus", "California", "123", "apple"],
-  ["Tim", "Nelson", "Pennsylvania", "456", "apple"],
+  ["Sushi", "Dish", "Japanese", "130", "10"],
+  ["Tacos", "Dish", "Mexican", "218", "6"],
+  ["Tandoori Chicken", "Dish", "Indian", "220", "8"],
+  ["Falafel", "Dish", "Middle Eastern", "333", "4"]
 ];
 
-searchDictionary.set("search1Miley", useIndex);
-searchDictionary.set("searchfirst nameMiley", useHeader);
-searchDictionary.set("search20Miley", invalidIndex);
-searchDictionary.set("searchnoHeaderMiley", noHeader);
-searchDictionary.set("searchFavoriteFruitapple", multOUtput);
+searchDictionary.set("search2Indian", useIndex);
+searchDictionary.set("searchCuisineIndian", useHeader);
+searchDictionary.set("search20Indian", invalidIndex);
+searchDictionary.set("searchnoHeaderIndian", noHeader);
+searchDictionary.set("searchTypeDish", multOUtput);
 

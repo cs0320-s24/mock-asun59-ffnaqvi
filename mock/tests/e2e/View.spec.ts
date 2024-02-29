@@ -34,7 +34,7 @@ test("valid view", async ({ page }) => {
     const history = document.querySelector(".repl-history");
     return history?.children[1]?.textContent;
   });
-  expect(second).toEqual("First NameLast NameStatePhone NumberFavorite FruitMileyCyrusCalifornia123appleBobNelsonRhode Island401401401pearTimNelsonPennsylvania456apple"); //header table view
+  expect(second).toEqual("FoodTypeCuisineCalories (per 100g)Price ($)SushiDishJapanese13010TacosDishMexican2186Tandoori ChickenDishIndian2208Mozerella SticksAppetizerItalian1315FalafelDishMiddle Eastern3334"); //header table view
 });
 
 //test view without load
@@ -94,6 +94,35 @@ test("view verbose", async ({ page }) => {
     return history?.children[3]?.textContent;
   });
 
-  expect(third).toEqual("First NameLast NameStatePhone NumberFavorite FruitMileyCyrusCalifornia123appleBobNelsonRhode Island401401401pearTimNelsonPennsylvania456apple");
+  expect(third).toEqual("FoodTypeCuisineCalories (per 100g)Price ($)SushiDishJapanese13010TacosDishMexican2186Tandoori ChickenDishIndian2208Mozerella SticksAppetizerItalian1315FalafelDishMiddle Eastern3334");
 
 });
+
+
+// test view invalid commands
+test("view invalid", async ({ page }) => {
+    // login
+    login(page);
+  
+    await page.getByLabel("Command input").click();
+    await page.getByLabel("Command input").fill("load_csv header");
+  
+    // Values are properly stored in history after entered after failed load
+    await page.getByRole("button", { name: "Submit" }).click();
+  
+  
+    await page.getByLabel("Command input").click();
+    await page.getByLabel("Command input").fill("view hello");
+  
+    // Values are properly stored in history after entered after failed load
+    await page.getByRole("button", { name: "Submit" }).click();
+  
+    const secondChild = await page.evaluate(() => {
+      const history = document.querySelector(".repl-history");
+      return history?.children[1]?.textContent;
+    });
+  
+    expect(secondChild).toEqual("Invalid Input"); // Failed load due to invalid file
+  
+  });
+  

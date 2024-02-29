@@ -80,6 +80,10 @@ export const view: REPLFunction = (
 export const search: REPLFunction = (
   searchCommands: Array<string>
 ): string[][] | string => {
+  console.log("load status is: " + load_status);
+  if (load_status !== 200) {
+    return "CSV file hasn't been loaded";
+  }
   if (searchCommands.length !== 3) {
     return "Invalid input, please enter the column identifier and search value separated by a space";
   }
@@ -89,7 +93,7 @@ export const search: REPLFunction = (
   console.log(commandString);
   console.log(output);
   console.log(searchCommands);
-  if (load_status == 200 && output && output[0][0] != "Invalid Index Number") {
+  if (load_status === 200 && output && output[0][0] != "Invalid Index Number") {
     return output;
   } else {
     if (output) {
