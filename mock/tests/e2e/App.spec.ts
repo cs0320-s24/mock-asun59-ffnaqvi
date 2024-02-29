@@ -18,7 +18,12 @@ test.beforeEach(async ({ page }) => {
  * you put before parts of your test that might take time to run,
  * like any interaction with the page.
  */
-
+// Helper to prevent repeititive VALID login
+async function login(page) {
+  await page.getByLabel("username").fill("Alyssa");
+  await page.getByLabel("password").fill("A");
+  await page.getByLabel("Login").click();
+}
 //Tests login functionality
 test("on page load, i see a login button", async ({ page }) => {
   await expect(page.getByLabel("Login")).toBeVisible();
@@ -26,93 +31,87 @@ test("on page load, i see a login button", async ({ page }) => {
   await expect(page.getByLabel("Sign Out")).not.toBeVisible();
 });
 
-//Tests valid login
-test('can log in with proper username and password', async ({ page })=>{
+// Test valid login
+test("on page load, i dont see the input box until login", async ({ page }) => {
+  // Pre login state is valid
+  await expect(page.getByLabel("Sign Out")).not.toBeVisible(); // Label is login option
+  await expect(page.getByLabel("Command input")).not.toBeVisible();
 
+  // Valid login (correct username and password)
+  login(page);
+
+  // Post login state is valid
+  await expect(page.getByLabel("Sign Out")).toBeVisible(); // Label is signout option
+  await expect(page.getByLabel("Command input")).toBeVisible(); // Command input compontents appears
+  await expect(page.getByRole("button", { name: "Submit" })).toBeVisible();
+});
+
+//testing that incorrect input doesn't login
+test("on page load, incorrect login does not show input box", async ({
+  page,
+}) => {
   await expect(page.getByLabel("Sign Out")).not.toBeVisible();
   await expect(page.getByLabel("Command input")).not.toBeVisible();
 
-  // Sign in by passing in correct username + password
-  await page.getByLabel("username").fill('Alyssa');
-  await page.getByLabel("password").fill('A');
+  // click the login button and login properly
+  await page.getByLabel("username").fill("Invalid");
+  await page.getByLabel("password").fill("Input");
   await page.getByLabel("Login").click();
 
-  // Successful login
-  await expect(page.getByLabel("Sign Out")).toBeVisible();
-  await expect(page.getByLabel("Command input")).toBeVisible();
-})
-
-//testing that sign out is not visible until login
-test('on page load, i dont see the input box until login', async ({ page }) => {
-  // Notice: http, not https! Our front-end is not set up for HTTPs.
-  await expect(page.getByLabel('Sign Out')).not.toBeVisible()
-  await expect(page.getByLabel('Command input')).not.toBeVisible()
-
-  // click the login button and login properly
-  await page.getByLabel("username").fill('Faizah');
-  await page.getByLabel("password").fill('F');
-  await page.getByLabel('Login').click();
-
-  await expect(page.getByLabel('Sign Out')).toBeVisible()
-  await expect(page.getByLabel('Command input')).toBeVisible()
-  await expect(page.getByRole("button")).toBeVisible()
-
-})
-
-//testing that incorrect input doesn't login
-test('on page load, incorrect login does not show input box', async ({ page }) => {
-  await expect(page.getByLabel('Sign Out')).not.toBeVisible()
-  await expect(page.getByLabel('Command input')).not.toBeVisible()
-
-  // click the login button and login properly
-  await page.getByLabel("username").fill('Invalid');
-  await page.getByLabel("password").fill('Input');
-  await page.getByLabel('Login').click();
-
-  await expect(page.getByLabel('Sign Out')).not.toBeVisible()
-  await expect(page.getByLabel('Command input')).not.toBeVisible()
-})
-
-test('after I type into the input box, its text changes', async ({ page }) => {
-  // login
-  await page.getByLabel("username").fill('Faizah');
-  await page.getByLabel("password").fill('F');
-  await page.getByLabel('Login').click();
-
-  // input text
-  await page.getByLabel('Command input').click();
-  await page.getByLabel('Command input').fill('Awesome command');
-  // await expect(page.getByRole('button')).click();
-
-  // something about the page
-  const mock_input = `Awesome command`
-  await expect(page.getByLabel('repl-history')).toHaveValue(mock_input)
+  // post login state should be unchaged
+  await expect(page.getByLabel("Sign Out")).not.toBeVisible(); // Command input compontents does not appear
+  await expect(page.getByLabel("Command input")).not.toBeVisible();
+  await expect(page.getByRole("button", { name: "Submit" })).not.toBeVisible();
 });
 
-// test('on page load, i see a button', async ({ page }) => {
-//   // CHANGED
-//   await page.getByLabel('Login').click();
-//   await expect(page.getByRole('button', {name: 'Submitted 0 times'})).toBeVisible()
-// });
+//testing signing in and signing out
+test("on page load, login then signout will bring me back to front page", async ({
+  page,
+}) => {
+  await expect(page.getByLabel("Sign Out")).not.toBeVisible();
+  await expect(page.getByLabel("Command input")).not.toBeVisible();
 
-// test('after I click the button, its label increments', async ({ page }) => {
-//   // CHANGED
-//   await page.getByLabel('Login').click();
-//   await expect(page.getByRole('button', {name: 'Submitted 0 times'})).toBeVisible()
-//   await page.getByRole('button', {name: 'Submitted 0 times'}).click()
-//   await expect(page.getByRole('button', {name: 'Submitted 1 times'})).toBeVisible()
-// });
+  // click the login button and login properly
+  login(page);
 
-// test('after I click the button, my command gets pushed', async ({ page }) => {
-//   // CHANGED
-//   await page.getByLabel('Login').click();
-//   await page.getByLabel('Command input').fill('Awesome command');
-//   await page.getByRole('button', {name: 'Submitted 0 times'}).click()
+  // Post login state is valid
+  await expect(page.getByLabel("Sign Out")).toBeVisible(); // Label is signout option
+  await expect(page.getByLabel("Command input")).toBeVisible(); // Command input compontents appears
+  await expect(page.getByRole("button", { name: "Submit" })).toBeVisible();
 
-//   // you can use page.evaulate to grab variable content from the page for more complex assertions
-//   const firstChild = await page.evaluate(() => {
-//     const history = document.querySelector('.repl-history');
-//     return history?.children[0]?.textContent;
-//   });
-//   expect(firstChild).toEqual("Awesome command");
-// });
+  // Signout state back to front page
+  await page.getByLabel("Sign Out").click();
+  await expect(page.getByLabel("Sign Out")).not.toBeVisible(); // Command input compontents does not appear
+  await expect(page.getByLabel("Command input")).not.toBeVisible();
+  await expect(page.getByRole("button", { name: "Submit" })).not.toBeVisible();
+});
+// Testing input updates
+test("after I type into the input box, its text changes", async ({ page }) => {
+  // login
+  login(page);
+
+  // input text
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("Awesome command");
+
+  // The text in command has changed
+  await expect(page.getByLabel("Command input")).toHaveValue("Awesome command");
+});
+// Invalid command updates/returns expected value
+test("after I type and enter random invalid command into the input box, the history box is updated", async ({ page }) => {
+  // login
+  login(page);
+
+  // input text
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("Awesome command");
+
+  // Values are properly stored in history after entered
+  await page.getByRole("button", { name: "Submit" }).click();
+  const firstChild = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[0]?.textContent;
+  });
+  expect(firstChild).toEqual("Invalid command");
+});
+
