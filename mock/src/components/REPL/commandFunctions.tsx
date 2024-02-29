@@ -3,7 +3,6 @@ import "../../styles/main.css";
 import React from "react";
 import { fileDictionary, searchDictionary } from "../data/mockData";
 
-
 // Strategy pattern interface
 export interface REPLFunction {
   (command: Array<string>): String | String[][];
@@ -14,8 +13,7 @@ interface REPLInputProps {
   setHistory: Dispatch<SetStateAction<string[]>>; //would cutomize the type
   mode: string;
   setMode: Dispatch<SetStateAction<string>>;
-} 
- 
+}
 
 let modesProps: string;
 let setModesProps: Dispatch<SetStateAction<string>>;
@@ -44,59 +42,59 @@ export const mode: REPLFunction = (modeArray: Array<string>): String => {
 
 export const load: REPLFunction = (loadFile: Array<string>): string => {
   if (loadFile.length !== 2) {
-      return "Invalid input, please enter the name of a csv file to load.";
- 
+    return "Invalid input, please enter the name of a csv file to load.";
   }
   const fileName = loadFile[1];
 
   const loadedData = fileDictionary.get(fileName);
-  if (loadedData && loadedData[0][0]!="invalid File path" && loadedData[0][0]!="Data is malformed") {
+  if (
+    loadedData &&
+    loadedData[0][0] != "invalid File path" &&
+    loadedData[0][0] != "Data is malformed"
+  ) {
     load_status = 200;
     csvData = loadedData;
-      return "File successfully loaded";
-  } 
-  else {
-      // Return backend specific error response
-      if(loadedData){
-        return loadedData[0][0];
-      }
-      return "Failed to load file";  
+    return "File successfully loaded";
+  } else {
+    // Return backend specific error response
+    if (loadedData) {
+      return loadedData[0][0];
+    }
+    return "Failed to load file";
   }
 };
 
-export const view: REPLFunction = (viewFile: Array<string>): string[][] | string => {
-  if (viewFile.length!=1){
-    return "Invalid Input"
+export const view: REPLFunction = (
+  viewFile: Array<string>
+): string[][] | string => {
+  if (viewFile.length != 1) {
+    return "Invalid Input";
   }
   if (load_status == 200) {
-  
-    return (csvData);
+    return csvData;
+  } else {
+    return "CSV file hasn't been loaded";
   }
-  else {
-    
-      return "CSV file hasn't been loaded";
-  }
-  
 };
 
-
-export const search: REPLFunction = (searchCommands: Array<string>): string[][] | string=> {
-  
+export const search: REPLFunction = (
+  searchCommands: Array<string>
+): string[][] | string => {
   if (searchCommands.length !== 3) {
-      return "Invalid input, please enter the column identifier and search value separated by a space";
+    return "Invalid input, please enter the column identifier and search value separated by a space";
   }
-  const commandString = searchCommands[0]+searchCommands[1]+searchCommands[2];
+  const commandString =
+    searchCommands[0] + searchCommands[1] + searchCommands[2];
   const output = searchDictionary.get(commandString);
+  console.log(commandString);
   console.log(output);
   console.log(searchCommands);
-  if (load_status ==200 && output && output[0][0] != "Invalid Index Number") {
+  if (load_status == 200 && output && output[0][0] != "Invalid Index Number") {
     return output;
-  }
-  else{
-    if(output){
+  } else {
+    if (output) {
       return output[0][0];
     }
     return "File failed to search";
   }
-   
 };
