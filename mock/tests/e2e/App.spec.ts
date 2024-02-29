@@ -12,18 +12,14 @@ test.beforeEach(async ({ page }) => {
   await page.goto("http://localhost:5173/");
 });
 
-/**
- * Don't worry about the "async" yet. We'll cover it in more detail
- * for the next sprint. For now, just think about "await" as something
- * you put before parts of your test that might take time to run,
- * like any interaction with the page.
- */
+
 // Helper to prevent repeititive VALID login
 async function login(page) {
   await page.getByLabel("username").fill("Alyssa");
   await page.getByLabel("password").fill("A");
   await page.getByLabel("Login").click();
 }
+
 //Tests login functionality
 test("on page load, i see a login button", async ({ page }) => {
   await expect(page.getByLabel("Login")).toBeVisible();
@@ -97,6 +93,7 @@ test("after I type into the input box, its text changes", async ({ page }) => {
   // The text in command has changed
   await expect(page.getByLabel("Command input")).toHaveValue("Awesome command");
 });
+
 // Invalid command updates/returns expected value
 test("after I type and enter random invalid command into the input box, the history box is updated", async ({ page }) => {
   // login

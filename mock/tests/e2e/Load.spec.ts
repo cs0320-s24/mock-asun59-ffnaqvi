@@ -32,6 +32,7 @@ test("valid updates everything correctly", async ({ page }) => {
 
   // TODO: Maybe test loaded file is properly stored in state..?
 });
+
 // Valid load in verbose mode
 test("valid updates everything correctly using verbose", async ({ page }) => {
   // login

@@ -46,8 +46,8 @@ export function REPLInput(props: REPLInputProps) {
           ariaLabel={"Command input"}
         />
       </fieldset>
-      <button aira-label = "Submit" onClick={() => handleClick(commandString)}>Submit </button>
-      <text>Current mode is: {props.mode}</text>
+      <button aria-label = "Submit" onClick={() => handleClick(commandString)}>Submit </button>
+      <text aria-label = "mode status">Current mode is: {props.mode}</text>
     </div>
   );
 }
