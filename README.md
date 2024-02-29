@@ -27,7 +27,7 @@
       - **REPL.tsx** is the higher level  file that simply manages the structure. There is a history 
       const and mode const. This is help here so that other files have access to these values and can update them accordingly. We added mode here from the gear up so we can have a **shared state** that properly updates mode and the command's mode output.
       - **REPLHisory.tsx** primarily manages with updating the history of user input and output. Much of the code was adopted from the gear up. We added an aditional funcitonality that as the history output search and view results in a form of a table for higher readability. Finally, - **REPLInput.tsx** simply handles taking in an input and entering it into our REPLFunction and retreiving an output. 
-    - **Other files:** the other files were just basic set ups. We added a password to our login to 
+  - **Other files:** the other files were just basic set ups. We added a password to our login to 
     **protect** user access to files. 
 
 # Errors/Bugs
