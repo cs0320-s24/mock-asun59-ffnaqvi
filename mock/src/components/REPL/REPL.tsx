@@ -3,7 +3,7 @@ import "../../styles/main.css";
 import { REPLHistory } from "./REPLHistory";
 import { REPLInput, commandStr } from "./REPLInput";
 import React from "react";
-import { CommandFunctions } from "./commandFunctions";
+import { CommandFunctions } from "../commands/commandFunctions";
 
 export default function REPL() {
   const [history, setHistory] = useState<string[]>([]);
@@ -11,10 +11,7 @@ export default function REPL() {
 
   return (
     <div className="repl">
-      <REPLHistory 
-        history={history} 
-        mode = {mode}
-        command = {commandStr}/>
+      <REPLHistory history={history} mode={mode} command={commandStr} />
       <hr></hr>
       <REPLInput
         history={history}

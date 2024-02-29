@@ -12,22 +12,23 @@ async function login(page) {
 }
 
 test("mode starts as brief", async ({ page }) => {
-    // login
-    await login(page);
+  // login
+  await login(page);
 
-    // Wait for the mode status text to be rendered
-    await page.waitForSelector('text[aria-label="mode status"]');
+  // Wait for the mode status text to be rendered
+  await page.waitForSelector('text[aria-label="mode status"]');
 
-    // Retrieve the mode status text
-    const modeStatusText = await page.evaluate(() => {
-      const modeStatusElement = document.querySelector('text[aria-label="mode status"]');
-      return modeStatusElement?.textContent;
-    });
+  // Retrieve the mode status text
+  const modeStatusText = await page.evaluate(() => {
+    const modeStatusElement = document.querySelector(
+      'text[aria-label="mode status"]'
+    );
+    return modeStatusElement?.textContent;
+  });
 
-    // Assert that the mode status text is "Current mode is: brief"
-    expect(modeStatusText).toEqual(`Current mode is: brief`);
+  // Assert that the mode status text is "Current mode is: brief"
+  expect(modeStatusText).toEqual(`Current mode is: brief`);
 });
-
 
 // basic valid mode
 test("mode works correctly", async ({ page }) => {
@@ -49,11 +50,12 @@ test("mode works correctly", async ({ page }) => {
   });
   expect(firstChild).toEqual("Mode Switched"); // successful output
   const modeStatusText = await page.evaluate(() => {
-    const modeStatusElement = document.querySelector('text[aria-label="mode status"]');
+    const modeStatusElement = document.querySelector(
+      'text[aria-label="mode status"]'
+    );
     return modeStatusElement?.textContent;
   });
   expect(modeStatusText).toEqual(`Current mode is: verbose`);
-
 });
 
 // Valid mode in verbose mode
@@ -91,30 +93,32 @@ test("valid updates everything correctly using verbose", async ({ page }) => {
 
 //tests invalid mode input
 test("mode multiple commands is invalid", async ({ page }) => {
-    // login
-    await login(page);
-  
-    // Set mode to verbose
-    await page.getByLabel("Command input").click();
-    await page.getByLabel("Command input").fill("mode invalid");
-    await page.getByRole("button", { name: "Submit" }).click();
+  // login
+  await login(page);
 
-    // Wait for the mode switch to complete
-    await page.waitForTimeout(500); // Adjust timeout as necessary
+  // Set mode to verbose
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("mode invalid");
+  await page.getByRole("button", { name: "Submit" }).click();
 
-    // Retrieve the mode status text
-    const modeStatusText = await page.evaluate(() => {
-      const modeStatusElement = document.querySelector('text[aria-label="mode status"]');
-      return modeStatusElement?.textContent;
-    });
+  // Wait for the mode switch to complete
+  await page.waitForTimeout(500); // Adjust timeout as necessary
 
-    // Assert that the mode status remains unchanged (brief)
-    expect(modeStatusText).toEqual(`Current mode is: brief`);
+  // Retrieve the mode status text
+  const modeStatusText = await page.evaluate(() => {
+    const modeStatusElement = document.querySelector(
+      'text[aria-label="mode status"]'
+    );
+    return modeStatusElement?.textContent;
+  });
 
-    // Verify that an error message is displayed in the history
-    const errorMessage = await page.evaluate(() => {
-        const history = document.querySelector(".repl-history");
-        return history?.children[0]?.textContent;
-    });
-    expect(errorMessage).toEqual("Invalid Input");
+  // Assert that the mode status remains unchanged (brief)
+  expect(modeStatusText).toEqual(`Current mode is: brief`);
+
+  // Verify that an error message is displayed in the history
+  const errorMessage = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[0]?.textContent;
+  });
+  expect(errorMessage).toEqual("Invalid Input");
 });

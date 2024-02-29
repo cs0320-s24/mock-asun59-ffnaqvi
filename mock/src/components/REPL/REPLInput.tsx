@@ -1,20 +1,18 @@
 import "../../styles/main.css";
 import { Dispatch, SetStateAction, useState } from "react";
 import { ControlledInput } from "../ControlledInput";
-import { InputHandler } from "./callCommand";
+import { InputHandler } from "../commands/callCommand";
 import React from "react";
 
 interface REPLInputProps {
   history: string[];
-  setHistory: Dispatch<SetStateAction<string[]>>; 
+  setHistory: Dispatch<SetStateAction<string[]>>;
   mode: string;
   setMode: Dispatch<SetStateAction<string>>;
-  
 }
 export let commandStr: string = "";
 export function REPLInput(props: REPLInputProps) {
-
-  const [commandString, setCommandString] = useState<string>("")
+  const [commandString, setCommandString] = useState<string>("");
 
   function handleClick(commandString: string) {
     let output;
@@ -24,15 +22,13 @@ export function REPLInput(props: REPLInputProps) {
     commandStr = commandArray[0];
     output = InputHandler.handleCommand(commandArray);
 
-    if (props.mode === 'verbose') {
-    
+    if (props.mode === "verbose") {
       commandLine = "Command: " + commandStr + "\nOutput: ";
       props.setHistory([...props.history, commandLine, output]);
-    }
-    else {
+    } else {
       props.setHistory([...props.history, output]);
     }
-   
+
     setCommandString("");
   }
 
@@ -46,9 +42,10 @@ export function REPLInput(props: REPLInputProps) {
           ariaLabel={"Command input"}
         />
       </fieldset>
-      <button aria-label = "Submit" onClick={() => handleClick(commandString)}>Submit </button>
-      <text aria-label = "mode status">Current mode is: {props.mode}</text>
+      <button aria-label="Submit" onClick={() => handleClick(commandString)}>
+        Submit{" "}
+      </button>
+      <text aria-label="mode status">Current mode is: {props.mode}</text>
     </div>
   );
 }
-

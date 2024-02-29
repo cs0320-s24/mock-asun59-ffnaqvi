@@ -7,11 +7,9 @@ import { expect, test } from "@playwright/test";
     3. Assert something about the page against your expectations
   Look for this pattern in the tests below!
  */
-
 test.beforeEach(async ({ page }) => {
   await page.goto("http://localhost:5173/");
 });
-
 
 // Helper to prevent repeititive VALID login
 async function login(page) {
@@ -95,7 +93,9 @@ test("after I type into the input box, its text changes", async ({ page }) => {
 });
 
 // Invalid command updates/returns expected value
-test("after I type and enter random invalid command into the input box, the history box is updated", async ({ page }) => {
+test("after I type and enter random invalid command into the input box, the history box is updated", async ({
+  page,
+}) => {
   // login
   login(page);
 
@@ -111,4 +111,3 @@ test("after I type and enter random invalid command into the input box, the hist
   });
   expect(firstChild).toEqual("Invalid command");
 });
-

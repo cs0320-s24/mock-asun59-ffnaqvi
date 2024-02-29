@@ -4,13 +4,14 @@ test.beforeEach(async ({ page }) => {
   await page.goto("http://localhost:5173/");
 });
 
-// Helper to prevent repeititive VALID login
+//Helper to prevent repeititive VALID login
 async function login(page) {
   await page.getByLabel("username").fill("Alyssa");
   await page.getByLabel("password").fill("A");
   await page.getByLabel("Login").click();
 }
-// Valid view
+
+//Valid view and login function test
 test("valid view", async ({ page }) => {
   // login
   login(page);
@@ -26,6 +27,7 @@ test("valid view", async ({ page }) => {
   });
   expect(firstChild).toEqual("File successfully loaded"); // successful output
 
+  //input view command
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("view");
   await page.getByRole("button", { name: "Submit" }).click();
@@ -34,95 +36,87 @@ test("valid view", async ({ page }) => {
     const history = document.querySelector(".repl-history");
     return history?.children[1]?.textContent;
   });
-  expect(second).toEqual("FoodTypeCuisineCalories (per 100g)Price ($)SushiDishJapanese13010TacosDishMexican2186Tandoori ChickenDishIndian2208Mozerella SticksAppetizerItalian1315FalafelDishMiddle Eastern3334"); //header table view
+  expect(second).toEqual(
+    "FoodTypeCuisineCalories (per 100g)Price ($)SushiDishJapanese13010TacosDishMexican2186Tandoori ChickenDishIndian2208Mozerella SticksAppetizerItalian1315FalafelDishMiddle Eastern3334"
+  ); //header table view
 });
 
 //test view without load
 test("view used without load", async ({ page }) => {
-  // login
+  //login
   login(page);
 
-  // change to verbose mode
+  //input view command
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("view");
   await page.getByRole("button", { name: "Submit" }).click();
 
-  // Values are properly stored in history after entered after successful load
+  //check output
   await page.getByRole("button", { name: "Submit" }).click();
   const secondChild = await page.evaluate(() => {
     const history = document.querySelector(".repl-history");
     return history?.children[0]?.textContent;
   });
 
-  expect(secondChild).toEqual("CSV file hasn't been loaded");
+  expect(secondChild).toEqual("CSV file hasn't been loaded"); //failure response
 });
-
 
 // test view in verbose mode
 test("view verbose", async ({ page }) => {
   // login
   login(page);
 
+  //input load function
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_csv header");
-
-  // Values are properly stored in history after entered after failed load
   await page.getByRole("button", { name: "Submit" }).click();
 
-
+  //input mode function
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("mode");
-
-  // Values are properly stored in history after entered after failed load
   await page.getByRole("button", { name: "Submit" }).click();
 
-  // loading invalid file path
+  //input view function
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("view");
-
-  // Values are properly stored in history after entered after failed load
   await page.getByRole("button", { name: "Submit" }).click();
+
   const secondChild = await page.evaluate(() => {
     const history = document.querySelector(".repl-history");
     return history?.children[2]?.textContent;
   });
 
-  expect(secondChild).toEqual("Command: view" + "\n" + "Output: "); // Failed load due to invalid file
+  expect(secondChild).toEqual("Command: view" + "\n" + "Output: "); // verbose mode
 
   const third = await page.evaluate(() => {
     const history = document.querySelector(".repl-history");
     return history?.children[3]?.textContent;
   });
 
-  expect(third).toEqual("FoodTypeCuisineCalories (per 100g)Price ($)SushiDishJapanese13010TacosDishMexican2186Tandoori ChickenDishIndian2208Mozerella SticksAppetizerItalian1315FalafelDishMiddle Eastern3334");
-
+  expect(third).toEqual(
+    "FoodTypeCuisineCalories (per 100g)Price ($)SushiDishJapanese13010TacosDishMexican2186Tandoori ChickenDishIndian2208Mozerella SticksAppetizerItalian1315FalafelDishMiddle Eastern3334"
+  ); //valid view
 });
-
 
 // test view invalid commands
 test("view invalid", async ({ page }) => {
-    // login
-    login(page);
-  
-    await page.getByLabel("Command input").click();
-    await page.getByLabel("Command input").fill("load_csv header");
-  
-    // Values are properly stored in history after entered after failed load
-    await page.getByRole("button", { name: "Submit" }).click();
-  
-  
-    await page.getByLabel("Command input").click();
-    await page.getByLabel("Command input").fill("view hello");
-  
-    // Values are properly stored in history after entered after failed load
-    await page.getByRole("button", { name: "Submit" }).click();
-  
-    const secondChild = await page.evaluate(() => {
-      const history = document.querySelector(".repl-history");
-      return history?.children[1]?.textContent;
-    });
-  
-    expect(secondChild).toEqual("Invalid Input"); // Failed load due to invalid file
-  
+  // login
+  login(page);
+
+  //load function
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_csv header");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  //test view with invalid command
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("view hello");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const secondChild = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[1]?.textContent;
   });
-  
+
+  expect(secondChild).toEqual("Invalid Input"); // Failed load due to invalid file
+});

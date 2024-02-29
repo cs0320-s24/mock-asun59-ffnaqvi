@@ -9,9 +9,7 @@ interface REPLHistoryProps {
 
 export function REPLHistory(props: REPLHistoryProps) {
   return (
-    <div 
-    aria-label = "repl-history"
-    className="repl-history">
+    <div aria-label="repl-history" className="repl-history">
       {props.history.map((historyItem, index) => {
         if (typeof historyItem === "string") {
           return <pre key={index}>{historyItem}</pre>;
@@ -21,7 +19,9 @@ export function REPLHistory(props: REPLHistoryProps) {
               <table>
                 <tbody>
                   {historyItem[0].length === 0 ? (
-                    <tr><td>&nbsp;</td></tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
                   ) : (
                     historyItem.map((row, rowIndex) => (
                       <tr key={rowIndex}>

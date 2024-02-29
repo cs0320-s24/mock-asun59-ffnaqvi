@@ -5,44 +5,47 @@
 */
 
 .repl {
-    position:relative;
-    min-height:95vh;    
+  position: relative;
+  min-height: 95vh;
 }
 
-.repl-history {      
-    height:55vh;   
-    margin: auto;
-    display: block;
-    overflow: scroll;    
+.repl-history {
+  height: 55vh;
+  margin: auto;
+  display: block;
+  overflow: scroll;
 }
 
-.repl-input {        
-    margin: auto;    
-    height:10vh;
+.repl-input {
+  margin: auto;
+  height: 10vh;
 }
 .repl-command-box {
-    width: 90%;            
-    margin: auto;
-    display: block;
+  width: 90%;
+  margin: auto;
+  display: block;
 }
-button{
-    margin: auto;
-    display: block;
+button {
+  margin: auto;
+  display: block;
 }
 
 table {
-    border-collapse: collapse;
-    width: 25%;
-    margin: auto; 
-    font-size: small;
-    font-family: 'Times New Roman', Times, serif;
-  }
-  
-  table, th, td {
-    border: 1px solid black;
-  }
-  
-  th, td {
-    padding: 8px;
-    text-align: left;
-  }
+  border-collapse: collapse;
+  width: 25%;
+  margin: auto;
+  font-size: small;
+  font-family: "Times New Roman", Times, serif;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+}

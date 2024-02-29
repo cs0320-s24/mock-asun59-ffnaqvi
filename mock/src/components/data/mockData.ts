@@ -21,9 +21,8 @@ const dataHeader = [
 const dataNoHeader = [
   ["Andrews", "Grinder", "North Campus"],
   ["Ratty", "Tomato Soup", "South Campus"],
-  ["Blue Room", "Muffin", "Campus Center"]
+  ["Blue Room", "Muffin", "Campus Center"],
 ];
-
 
 const emptyData = [[]];
 
@@ -49,7 +48,7 @@ const multOUtput = [
   ["Sushi", "Dish", "Japanese", "130", "10"],
   ["Tacos", "Dish", "Mexican", "218", "6"],
   ["Tandoori Chicken", "Dish", "Indian", "220", "8"],
-  ["Falafel", "Dish", "Middle Eastern", "333", "4"]
+  ["Falafel", "Dish", "Middle Eastern", "333", "4"],
 ];
 
 searchDictionary.set("search2Indian", useIndex);
@@ -57,4 +56,3 @@ searchDictionary.set("searchCuisineIndian", useHeader);
 searchDictionary.set("search20Indian", invalidIndex);
 searchDictionary.set("searchnoHeaderIndian", noHeader);
 searchDictionary.set("searchTypeDish", multOUtput);
-
