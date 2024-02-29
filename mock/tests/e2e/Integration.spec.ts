@@ -247,3 +247,57 @@ test("load and search", async ({ page }) => {
   });
   expect(outputText).toEqual("Tandoori ChickenDishIndian2208");
 });
+
+//tests just search and load
+test("load and then log out", async ({ page }) => {
+  // login
+  await login(page);
+
+  // Set mode to verbose
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_csv header");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  // Check if the data was successfully loaded
+  const loadStatusText = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[0]?.textContent;
+  });
+  expect(loadStatusText).toEqual("File successfully loaded");
+
+  // Signout state back to front page
+  await page.getByLabel("Sign Out").click();
+  await expect(page.getByLabel("Sign Out")).not.toBeVisible(); // Command input compontents does not appear
+  await expect(page.getByLabel("Command input")).not.toBeVisible();
+  await expect(page.getByRole("button", { name: "Submit" })).not.toBeVisible();
+});
+
+//tests just search and load
+test("load and load", async ({ page }) => {
+  // login
+  await login(page);
+
+  // Set mode to verbose
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_csv header");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  // Check if the data was successfully loaded
+  const loadStatusText = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[0]?.textContent;
+  });
+  expect(loadStatusText).toEqual("File successfully loaded");
+
+  // Set mode to verbose
+  await page.getByLabel("Command input").click();
+  await page.getByLabel("Command input").fill("load_csv header");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  // Check if the data was successfully loaded
+  const second = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[1]?.textContent;
+  });
+  expect(second).toEqual("File successfully loaded");
+});
