@@ -51,6 +51,12 @@ export function LoginButton(props: loginProps) {
         <button aria-label="Login" onClick={authenticate}>
           Login
         </button>
+        <p>
+          Hello! Welcome to our Mock. The usename and password to sign in is
+          "Alyssa", "A" (respectively) OR "Faizah", "F" (respectively). Once you are signed in, 
+          you can call commands such as load_csv file, mode, search header file, and view! If an invalid 
+          command is entered, you will receive an error message!
+        </p>
         {error && <p>{error}</p>}
       </div>
     );
