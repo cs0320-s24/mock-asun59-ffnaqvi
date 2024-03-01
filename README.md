@@ -3,6 +3,7 @@
 **Project Name:** Mock
 
 **Team Members and Contributions:** Alyssa Sun (asun59), Faizah Naqvi (ffnaqvi) (20 hrs)
+Alyssa worked on the strategy pattern, mocked data, testing, README, and overall structure of the program. Faizah worked on the front end table interaction, overall structure of the program, commenting, and testing.
 
 **Link to Repo:** [repo](https://github.com/cs0320-s24/mock-asun59-ffnaqvi)
 
@@ -50,6 +51,14 @@ calls and actions function well together.
 **npx playwright test** in your terminal to execute the front end playwright tests. 
 
 **Build and Run Program:** cd into mock where teh application lives. Call **npm start** in your terminal to run our applcation. Then click on the local host link!
+
+**Enter valid commands:** There are four valid commands: mode, search, load_csv, and view. view can only be used after load_csv is successfully called and has no arguments. load_csv needs to have the name of a valid file. search can only be called after load_csv is successfully called and requires a column indentifier (which can be a string or an int) and a search value. mode has no arguments.
+
+**Example inputs:**         
+1. mode
+2. load_csv header
+3. view
+4. search 2 Indian
 
 # Collaboration
 No collaboration
