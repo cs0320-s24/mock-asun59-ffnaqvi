@@ -1,24 +1,35 @@
 import { expect, test } from "@playwright/test";
 
+/**
+ * A method to go to the page before each test
+ */
 test.beforeEach(async ({ page }) => {
   await page.goto("http://localhost:5173/");
 });
 
-// Helper to prevent repeititive VALID login
+/**
+ * A helper function to prevent repetitive valid login
+ * @param page 
+ */
 async function login(page) {
-  await page.getByLabel("username").fill("Faizah");
-  await page.getByLabel("password").fill("F");
+  await page.getByLabel("username").fill("Alyssa");
+  await page.getByLabel("password").fill("A");
   await page.getByLabel("Login").click();
 }
 
+/**
+ * A test to ensure that all of the frontend elements have the correct
+ * output when nothing is inputted and the mode of the program 
+ * should is in brief mode
+ */
 test("mode starts as brief", async ({ page }) => {
-  // login
+  //login
   await login(page);
 
-  // Wait for the mode status text to be rendered
+  //Wait for the mode status text to be rendered
   await page.waitForSelector('text[aria-label="mode status"]');
 
-  // Retrieve the mode status text
+  //Retrieve the mode status text
   const modeStatusText = await page.evaluate(() => {
     const modeStatusElement = document.querySelector(
       'text[aria-label="mode status"]'
@@ -26,23 +37,28 @@ test("mode starts as brief", async ({ page }) => {
     return modeStatusElement?.textContent;
   });
 
-  // Assert that the mode status text is "Current mode is: brief"
+  //Assert that the mode status text is "Current mode is: brief"
   expect(modeStatusText).toEqual(`Current mode is: brief`);
 });
 
-// basic valid mode
+
+/**
+ * A test to ensure that all of the frontend elements have the correct
+ * output when mode is entered and the mode is switched to
+ * verbose mode
+ */
 test("mode works correctly", async ({ page }) => {
-  // login
+  //login
   login(page);
 
-  // valid mode input
+  //valid mode input
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("mode");
 
-  // The text in command has changed
+  //The text in command has changed
   await expect(page.getByLabel("Command input")).toHaveValue("mode");
 
-  // Values are properly stored in history after entered after successful load
+  //Values are properly stored in history after entered after successful load
   await page.getByRole("button", { name: "Submit" }).click();
   const firstChild = await page.evaluate(() => {
     const history = document.querySelector(".repl-history");
@@ -58,24 +74,27 @@ test("mode works correctly", async ({ page }) => {
   expect(modeStatusText).toEqual(`Current mode is: verbose`);
 });
 
-// Valid mode in verbose mode
+/**
+ * A test to ensure that using mode sequentially has the expected outcome
+ * in frontend elements
+ */
 test("valid updates everything correctly using verbose", async ({ page }) => {
   // login
   login(page);
 
-  // change to verbose mode
+  //change to verbose mode
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("mode");
   await page.getByRole("button", { name: "Submit" }).click();
 
-  // valid load input
+  //valid load input
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("mode");
 
-  // The text in command has changed
+  //The text in command has changed
   await expect(page.getByLabel("Command input")).toHaveValue("mode");
 
-  // Values are properly stored in history after entered after successful load
+  //Values are properly stored in history after entered after successful load
   await page.getByRole("button", { name: "Submit" }).click();
   const secondChild = await page.evaluate(() => {
     const history = document.querySelector(".repl-history");
@@ -91,12 +110,16 @@ test("valid updates everything correctly using verbose", async ({ page }) => {
   expect(thirdChild).toEqual("Mode Switched"); // successful output in verbose
 });
 
-//tests invalid mode input
+/**
+ * A test to ensure that all of the frontend elements have the correct
+ * output when mode is entered with incorrect commands in the command 
+ * box 
+ */
 test("mode multiple commands is invalid", async ({ page }) => {
-  // login
+  //login
   await login(page);
 
-  // Set mode to verbose
+  //Set mode to verbose
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("mode invalid");
   await page.getByRole("button", { name: "Submit" }).click();

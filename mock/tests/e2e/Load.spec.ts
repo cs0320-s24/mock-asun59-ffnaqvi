@@ -1,56 +1,67 @@
 import { expect, test } from "@playwright/test";
 
+/**
+ * A method to go to the page before each test
+ */
 test.beforeEach(async ({ page }) => {
   await page.goto("http://localhost:5173/");
 });
 
-// Helper to prevent repeititive VALID login
+/**
+ * A helper function to prevent repetitive valid login
+ * @param page 
+ */
 async function login(page) {
   await page.getByLabel("username").fill("Alyssa");
   await page.getByLabel("password").fill("A");
   await page.getByLabel("Login").click();
 }
-// Valid load
+
+/**
+ * A test to ensure that all of the frontend elements have the correct
+ * output when load_csv is entered in the command box in brief mode
+ */
 test("valid updates everything correctly", async ({ page }) => {
-  // login
+  //login
   login(page);
 
-  // valid load input
+  //valid load input
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_csv header");
 
-  // The text in command has changed
+  //The text in command has changed
   await expect(page.getByLabel("Command input")).toHaveValue("load_csv header");
 
-  // Values are properly stored in history after entered after successful load
+  //Values are properly stored in history after entered after successful load
   await page.getByRole("button", { name: "Submit" }).click();
   const firstChild = await page.evaluate(() => {
     const history = document.querySelector(".repl-history");
     return history?.children[0]?.textContent;
   });
   expect(firstChild).toEqual("File successfully loaded"); // successful output
-
-  // TODO: Maybe test loaded file is properly stored in state..?
 });
 
-// Valid load in verbose mode
+/**
+ * A test to ensure that all of the frontend elements have the correct
+ * output when load_csv is entered in the command box in verbose mode
+ */
 test("valid updates everything correctly using verbose", async ({ page }) => {
-  // login
+  //login
   login(page);
 
-  // change to verbose mode
+  //change to verbose mode
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("mode");
   await page.getByRole("button", { name: "Submit" }).click();
 
-  // valid load input
+  //valid load input
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_csv header");
 
-  // The text in command has changed
+  //The text in command has changed
   await expect(page.getByLabel("Command input")).toHaveValue("load_csv header");
 
-  // Values are properly stored in history after entered after successful load
+  //Values are properly stored in history after entered after successful load
   await page.getByRole("button", { name: "Submit" }).click();
   const secondChild = await page.evaluate(() => {
     const history = document.querySelector(".repl-history");
@@ -64,10 +75,13 @@ test("valid updates everything correctly using verbose", async ({ page }) => {
     return history?.children[2]?.textContent;
   });
   expect(thirdChild).toEqual("File successfully loaded"); // successful output in verbose
-
-  // TODO: Maybe test loaded file is properly stored in state..?
 });
-// load invalid file
+
+/**
+ * A test to ensure that all of the frontend elements have the correct
+ * output when load_csv is entered with the special cases of csv data in
+ * the command box in brief mode
+ */
 test("loading failures", async ({ page }) => {
   // login
   login(page);
@@ -97,11 +111,11 @@ test("loading failures", async ({ page }) => {
 
   expect(secondChild).toEqual("invalid File path"); // Failed load due to invalid file
 
-  // loading invalid input form after load
+  //loading invalid input form after load
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_csv hello bye");
 
-  // Values are properly stored in history after entered after failed load
+  //Values are properly stored in history after entered after failed load
   await page.getByRole("button", { name: "Submit" }).click();
   const third = await page.evaluate(() => {
     const history = document.querySelector(".repl-history");
@@ -112,11 +126,11 @@ test("loading failures", async ({ page }) => {
     "Invalid input, please enter the name of a csv file to load."
   ); // Failed load due to invalid input after load
 
-  // loading malformed file
+  //loading malformed file
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_csv malformedData");
 
-  // Values are properly stored in history after entered after successful load
+  //Values are properly stored in history after entered after successful load
   await page.getByRole("button", { name: "Submit" }).click();
   const fourth = await page.evaluate(() => {
     const history = document.querySelector(".repl-history");

@@ -1,17 +1,27 @@
 import { expect, test } from "@playwright/test";
 
+/**
+ * A method to go to the page before each test
+ */
 test.beforeEach(async ({ page }) => {
   await page.goto("http://localhost:5173/");
 });
 
-//Helper to prevent repeititive VALID login
+/**
+ * A helper function to prevent repetitive valid login
+ * @param page 
+ */
 async function login(page) {
   await page.getByLabel("username").fill("Alyssa");
   await page.getByLabel("password").fill("A");
   await page.getByLabel("Login").click();
 }
 
-//Valid view and login function test
+/**
+ * A test to ensure that all of the frontend elements have the correct
+ * output when view is used with the index after load_csv is entered 
+ * in the command box in brief mode
+ */
 test("valid view", async ({ page }) => {
   // login
   login(page);
@@ -41,7 +51,10 @@ test("valid view", async ({ page }) => {
   ); //header table view
 });
 
-//test view without load
+/**
+ * A test to ensure that all of the frontend elements have the correct
+ * output when view is used without load_csv in brief mode
+ */
 test("view used without load", async ({ page }) => {
   //login
   login(page);
@@ -61,7 +74,11 @@ test("view used without load", async ({ page }) => {
   expect(secondChild).toEqual("CSV file hasn't been loaded"); //failure response
 });
 
-// test view in verbose mode
+/**
+ * A test to ensure that all of the frontend elements have the correct
+ * output when view is used with the index after load_csv is entered 
+ * in the command box in verbose mode
+ */
 test("view verbose", async ({ page }) => {
   // login
   login(page);
@@ -98,7 +115,11 @@ test("view verbose", async ({ page }) => {
   ); //valid view
 });
 
-// test view invalid commands
+/**
+ * A test to ensure that all of the frontend elements have the correct
+ * output when view is used with invalid commands after load_csv is entered 
+ * in the command box in brief mode
+ */
 test("view invalid", async ({ page }) => {
   // login
   login(page);

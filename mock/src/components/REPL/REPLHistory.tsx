@@ -1,12 +1,26 @@
 import React from "react";
 import "../../styles/main.css";
 
+/**
+ * An interface to store the history of frontend interaction with the input box,
+ * a string that represents the mode of the program,
+ * and a string that represent the frontend input that corresponds to a command
+ */
 interface REPLHistoryProps {
   history: (string | string[])[];
   mode: string;
   command: string;
 }
 
+/**
+ * A function to format and store user interaction with the frontend command box
+ * depending on the entered command
+ * 
+ * Returns either a string or table format
+ * 
+ * @param props the interface REPLHistoryProps
+ * @returns information to be displayed to the frontend
+ */
 export function REPLHistory(props: REPLHistoryProps) {
   return (
     <div aria-label="repl-history" className="repl-history">

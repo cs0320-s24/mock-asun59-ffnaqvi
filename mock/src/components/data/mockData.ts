@@ -1,3 +1,8 @@
+/**
+ * This class serves as a way to test the front end without backend logic
+ * through modeling different kinds of csv files that are stored and accessed
+ * from data structures
+ */
 export const usernamePassword = new Map<string, string>();
 export const fileDictionary = new Map<string, string[][]>();
 export const searchDictionary = new Map<string, string[][]>();
@@ -6,8 +11,7 @@ usernamePassword.set("Alyssa", "A");
 usernamePassword.set("Faizah", "F");
 
 /**
- * A file for our mocked data containing a variety of sizes, shapes, and
- * types of mocked JSON files.
+ * Repesents a file with headers
  */
 const dataHeader = [
   ["Food", "Type", "Cuisine", "Calories (per 100g)", "Price ($)"],
@@ -18,18 +22,25 @@ const dataHeader = [
   ["Falafel", "Dish", "Middle Eastern", "333", "4"],
 ];
 
+/**
+ * Repesents a file with no headers
+ */
 const dataNoHeader = [
   ["Andrews", "Grinder", "North Campus"],
   ["Ratty", "Tomato Soup", "South Campus"],
   ["Blue Room", "Muffin", "Campus Center"],
 ];
 
+//represents an empty csv
 const emptyData = [[]];
 
+//represents a file with an invalid file path
 const invalidFilePath = [["invalid File path"]];
 
+//represents a file with malformed data
 const malformedData = [["Data is malformed"]];
-// Creating file dictionary
+
+//Creating file dictionary
 fileDictionary.set("header", dataHeader);
 fileDictionary.set("noHeader", dataNoHeader);
 fileDictionary.set("emptyData", emptyData);
@@ -51,8 +62,11 @@ const multOUtput = [
   ["Falafel", "Dish", "Middle Eastern", "333", "4"],
 ];
 
+/**
+ * Adds mocked search input to the search mocked data structure
+ */
 searchDictionary.set("search2Indian", useIndex);
 searchDictionary.set("searchCuisineIndian", useHeader);
 searchDictionary.set("search20Indian", invalidIndex);
-searchDictionary.set("searchnoHeaderIndian", noHeader);
+searchDictionary.set("searchFoodIndian", noHeader);
 searchDictionary.set("searchTypeDish", multOUtput);

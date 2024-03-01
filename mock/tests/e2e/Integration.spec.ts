@@ -1,17 +1,26 @@
 import { expect, test } from "@playwright/test";
 
+/**
+ * A function to go to the page before each test
+ */
 test.beforeEach(async ({ page }) => {
   await page.goto("http://localhost:5173/");
 });
 
-//Helper to prevent repeititive VALID login
+/**
+ * A helper function to prevent repeititive VALID login
+ * @param page
+ */
 async function login(page) {
   await page.getByLabel("username").fill("Alyssa");
   await page.getByLabel("password").fill("A");
   await page.getByLabel("Login").click();
 }
 
-//tests mode interaction with other functions
+/**
+ * A test to ensure that the output of the load_csv changes to display the
+ * comamnd and output properly when the mode is switched to verbose
+ */
 test("mode and load", async ({ page }) => {
   //login
   await login(page);
@@ -42,7 +51,7 @@ test("mode and load", async ({ page }) => {
   });
   expect(outputText).toEqual("Command: load_csv\nOutput: ");
 
-  // Check if the data was successfully loaded
+  //Check if the data was successfully loaded
   const loadStatusText = await page.evaluate(() => {
     const history = document.querySelector(".repl-history");
     return history?.children[2]?.textContent;
@@ -50,7 +59,10 @@ test("mode and load", async ({ page }) => {
   expect(loadStatusText).toEqual("File successfully loaded");
 });
 
-//tests brief load, view, search
+/**
+ * A test to ensure that the interaction between the load_csv, view, and 
+ * search commands is as expected when used as instructed in brief mode
+ */
 test("brief load, view, search", async ({ page }) => {
   // login
   await login(page);
@@ -96,7 +108,10 @@ test("brief load, view, search", async ({ page }) => {
   expect(loadStatusText).toEqual("Tandoori ChickenDishIndian2208");
 });
 
-//tests verbose load, view, search
+/**
+ * A test to ensure that the interaction between the load_csv, view, and 
+ * search commands is as expected when used as instructed in verbose mode
+ */
 test("verbose load, view, search", async ({ page }) => {
   //login
   await login(page);
@@ -176,9 +191,13 @@ test("verbose load, view, search", async ({ page }) => {
   expect(searchText2).toEqual("Tandoori ChickenDishIndian2208");
 });
 
-//tests brief load, view, search with invalid load
+/**
+ * A test to ensure that the interaction between the load_csv, view, and 
+ * search commands is as expected when load_csv has incorrect input
+ * in brief mode
+ */
 test("invalid load, view, search", async ({ page }) => {
-  // login
+  //login
   await login(page);
 
   //load file
@@ -218,12 +237,16 @@ test("invalid load, view, search", async ({ page }) => {
   expect(searchText).toEqual("CSV file hasn't been loaded");
 });
 
-//tests just search and load
+/**
+ * A test to ensure that the interaction between the load_csv and 
+ * search commands is as expected when used as instructed in brief mode
+ * and used without load
+ */
 test("load and search", async ({ page }) => {
-  // login
+  //login
   await login(page);
 
-  // Set mode to verbose
+  //Set mode to verbose
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_csv header");
   await page.getByRole("button", { name: "Submit" }).click();
@@ -233,14 +256,14 @@ test("load and search", async ({ page }) => {
   await page.getByLabel("Command input").fill("search 2 Indian");
   await page.getByRole("button", { name: "Submit" }).click();
 
-  // Check if the data was successfully loaded
+  //Check if the data was successfully loaded
   const loadStatusText = await page.evaluate(() => {
     const history = document.querySelector(".repl-history");
     return history?.children[0]?.textContent;
   });
   expect(loadStatusText).toEqual("File successfully loaded");
 
-  // Check if the output is correct
+  //Check if the output is correct
   const outputText = await page.evaluate(() => {
     const history = document.querySelector(".repl-history");
     return history?.children[1]?.textContent;
@@ -248,7 +271,10 @@ test("load and search", async ({ page }) => {
   expect(outputText).toEqual("Tandoori ChickenDishIndian2208");
 });
 
-//tests just search and load
+/**
+ * A test to ensure that the interaction between the load_csv and 
+ * frontend interaction with the log out button is as expected
+ */
 test("load and then log out", async ({ page }) => {
   // login
   await login(page);
@@ -272,7 +298,11 @@ test("load and then log out", async ({ page }) => {
   await expect(page.getByRole("button", { name: "Submit" })).not.toBeVisible();
 });
 
-//tests just search and load
+/**
+ * A test to ensure that the interaction between the load_csv and another
+ * load_csv command is successful and the frontend messages displayed are
+ * as expected
+ */
 test("load and load", async ({ page }) => {
   // login
   await login(page);

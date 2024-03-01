@@ -1,11 +1,27 @@
 import React, { useState } from "react";
 import { Dispatch, SetStateAction } from "react";
 import { usernamePassword } from "./data/mockData";
+
+/**
+ * Interface to keep track of the boolean of whether or not a user 
+ * is logged in and the state hook for the loggedIn boolean
+ */
 interface loginProps {
   isLoggedIn: boolean;
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
 }
 
+/**
+ * A function that represents a front end login button and authenticates correct
+ * user login information
+ * 
+ * If logged in, a sign out button appears
+ * 
+ * If not logged in, a log in button and instructions for logging in appear
+ * 
+ * @param props 
+ * @returns 
+ */
 export function LoginButton(props: loginProps) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

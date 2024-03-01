@@ -5,7 +5,8 @@ import REPL from "./REPL/REPL";
 import React from "react";
 
 /**
- * This is the highest level component!
+ * This function represents the highest level component of the Mock
+ * which represents the frontend Mock login page
  */
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);

@@ -1,22 +1,32 @@
 import { expect, test } from "@playwright/test";
 
+/**
+ * A method to go to the page before each test
+ */
 test.beforeEach(async ({ page }) => {
   await page.goto("http://localhost:5173/");
 });
 
-// Helper to prevent repeititive VALID login
+/**
+ * A helper function to prevent repetitive valid login
+ * @param page 
+ */
 async function login(page) {
   await page.getByLabel("username").fill("Alyssa");
   await page.getByLabel("password").fill("A");
   await page.getByLabel("Login").click();
 }
 
-// Valid search
+/**
+ * A test to ensure that all of the frontend elements have the correct
+ * output when search is used with the index after load_csv is entered 
+ * in the command box in brief mode
+ */
 test("valid search with index", async ({ page }) => {
-  // login
+  //login
   login(page);
 
-  // valid load input
+  //valid load input
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_csv header");
   await page.getByRole("button", { name: "Submit" }).click();
@@ -38,12 +48,16 @@ test("valid search with index", async ({ page }) => {
   expect(second).toEqual("Tandoori ChickenDishIndian2208"); //search table results
 });
 
-// Valid search
+/**
+ * A test to ensure that all of the frontend elements have the correct
+ * output when search is used with the indentifier after load_csv is entered 
+ * in the command box in brief mode
+ */
 test("valid search with identifier", async ({ page }) => {
-  // login
+  //login
   login(page);
 
-  // valid load input
+  //valid load input
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_csv header");
   await page.getByRole("button", { name: "Submit" }).click();
@@ -65,7 +79,11 @@ test("valid search with identifier", async ({ page }) => {
   expect(second).toEqual("Tandoori ChickenDishIndian2208"); //search table results
 });
 
-// test search in verbose mode
+/**
+ * A test to ensure that all of the frontend elements have the correct
+ * output when search is used with the index after load_csv is entered 
+ * in the command box in verbose mode
+ */
 test("search verbose", async ({ page }) => {
   // login
   login(page);
@@ -103,7 +121,11 @@ test("search verbose", async ({ page }) => {
   expect(third).toEqual("Tandoori ChickenDishIndian2208");
 });
 
-//test search without load
+/**
+ * A test to ensure that all of the frontend elements have the correct
+ * output when search is used with the index without load_csv in the 
+ * command box in brief mode
+ */
 test("search used without load", async ({ page }) => {
   // login
   login(page);
@@ -123,22 +145,26 @@ test("search used without load", async ({ page }) => {
   expect(secondChild).toEqual("CSV file hasn't been loaded");
 });
 
-// test search with invalid input
+/**
+ * A test to ensure that all of the frontend elements have the correct
+ * output when search is used with invalid commans after after load_csv 
+ * is entered in the command box in brief mode
+ */
 test("search invalid", async ({ page }) => {
-  // login
+  //login
   login(page);
 
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("load_csv header");
 
-  // Values are properly stored in history after entered after failed load
+  //Values are properly stored in history after entered after failed load
   await page.getByRole("button", { name: "Submit" }).click();
 
-  // loading invalid file path
+  //loading invalid file path
   await page.getByLabel("Command input").click();
   await page.getByLabel("Command input").fill("search 1");
 
-  // Values are properly stored in history after entered after failed load
+  //Values are properly stored in history after entered after failed load
   await page.getByRole("button", { name: "Submit" }).click();
   const secondChild = await page.evaluate(() => {
     const history = document.querySelector(".repl-history");
@@ -150,7 +176,11 @@ test("search invalid", async ({ page }) => {
   ); // Failed load due to invalid file
 });
 
-//search with invalid index
+/**
+ * A test to ensure that all of the frontend elements have the correct
+ * output when search is used with an invalid index after load_csv is entered 
+ * in the command box in brief mode
+ */
 test("search invalid index", async ({ page }) => {
   // login
   login(page);
@@ -177,7 +207,11 @@ test("search invalid index", async ({ page }) => {
   expect(second).toEqual("Invalid Index Number");
 });
 
-// Valid search
+/**
+ * A test to ensure that all of the frontend elements have the correct
+ * output when search is used with the index and has mltiple data rows
+ * as output after load_csv is entered in the command box in brief mode
+ */
 test("valid search with multiple output", async ({ page }) => {
   // login
   login(page);
