@@ -68,5 +68,5 @@ const multOUtput = [
 searchDictionary.set("search2Indian", useIndex);
 searchDictionary.set("searchCuisineIndian", useHeader);
 searchDictionary.set("search20Indian", invalidIndex);
-searchDictionary.set("searchFoodIndian", noHeader);
+searchDictionary.set("searchFoodIndian", noHeader); // Data with no match/output
 searchDictionary.set("searchTypeDish", multOUtput);
